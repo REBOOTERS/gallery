@@ -1,0 +1,1154 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="06-ui-component-layer.html">
+      
+      
+        <link rel="next" href="08-first-time-user-end-to-end.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 核心架构 07：系统能力与后台模块 - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-07" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 核心架构 07：系统能力与后台模块
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-startup-and-app-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-data-and-state-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-runtime-inference-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-task-extension-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-ui-component-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="07-system-and-background.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（后台模块关系）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-downloadrepository-downloadworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 下载链路：DownloadRepository -&gt; DownloadWorker
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Worker 下载实逻辑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) 定时通知系统
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-fcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) 推送通知系统（FCM）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 开机恢复
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Manifest 中的关键接线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（模型下载全流程）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（为什么通知点击能直达模型页）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downloadworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：DownloadWorker 状态与失败处理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：通知调度规则表（一次性/重复）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充流程图：FCM 到页面跳转全链路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manifest 接线检查清单（排错时按这个看）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（系统与后台）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（后台模块关系）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-downloadrepository-downloadworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 下载链路：DownloadRepository -&gt; DownloadWorker
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Worker 下载实逻辑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) 定时通知系统
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-fcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) 推送通知系统（FCM）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 开机恢复
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Manifest 中的关键接线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（模型下载全流程）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（为什么通知点击能直达模型页）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downloadworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：DownloadWorker 状态与失败处理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：通知调度规则表（一次性/重复）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充流程图：FCM 到页面跳转全链路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manifest 接线检查清单（排错时按这个看）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（系统与后台）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-07">Android 核心架构 07：系统能力与后台模块<a class="headerlink" href="#android-07" title="Permanent link">&para;</a></h1>
+<h2 id="_1">这章讲什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>如果前台页面是“教室”，那这章是“后勤部门”：</p>
+<ul>
+<li>下载员：后台下载大模型</li>
+<li>通知员：定时提醒、推送提醒</li>
+<li>档案员：把数据写到 proto 文件</li>
+<li>门卫：开机后把提醒重新挂上</li>
+</ul>
+<hr />
+<h2 id="_2">架构图（后台模块关系）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[DownloadRepository] --&gt; B[WorkManager]
+    B --&gt; C[DownloadWorker]
+    C --&gt; D[前台下载通知]
+    C --&gt; E[模型文件/解压目录]
+
+    F[NotificationScheduleManager] --&gt; G[AlarmManager]
+    G --&gt; H[NotificationReceiver]
+
+    I[BootReceiver] --&gt; F
+    J[GalleryFcmMessagingService] --&gt; K[推送通知]
+    K --&gt; L[MainActivity deeplink]
+
+    M[proto/*.proto] --&gt; N[DataStore serializers]</code></pre>
+<hr />
+<h2 id="_3">关键代码细节（函数级）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="1-downloadrepository-downloadworker">1) 下载链路：<code>DownloadRepository -&gt; DownloadWorker</code><a class="headerlink" href="#1-downloadrepository-downloadworker" title="Permanent link">&para;</a></h2>
+<p><code>DefaultDownloadRepository.downloadModel(...)</code> 具体动作：</p>
+<ol>
+<li>组 <code>inputData</code>（模型 URL、版本、文件名、额外数据 URL、token）。</li>
+<li>建 <code>OneTimeWorkRequestBuilder&lt;DownloadWorker&gt;()</code>。</li>
+<li><code>enqueueUniqueWork(model.name, REPLACE, request)</code>。</li>
+<li><code>observerWorkerProgress(...)</code> 监听状态：</li>
+<li>ENQUEUED/RUNNING/SUCCEEDED/FAILED/CANCELLED</li>
+<li>更新 <code>ModelDownloadStatus</code> 并通知 UI。</li>
+</ol>
+<hr />
+<h2 id="2-worker">2) Worker 下载实逻辑<a class="headerlink" href="#2-worker" title="Permanent link">&para;</a></h2>
+<p><code>DownloadWorker.doWork()</code> 里做了真实下载细节：</p>
+<ul>
+<li>如果 tmp 文件存在，设置 HTTP <code>Range</code> 续传</li>
+<li>每 200ms 上报进度（已下载字节、速率、剩余时间）</li>
+<li>下载结束后把 <code>*.tmp</code> 改名为正式文件</li>
+<li>如果 <code>isZip=true</code>，解压到 <code>unzippedDir</code> 并删 zip</li>
+</ul>
+<p>这不是“下载一下”，是有断点续传和解压流程的。</p>
+<hr />
+<h2 id="3">3) 定时通知系统<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p><code>NotificationScheduleManager.scheduleNotification(...)</code>：</p>
+<ul>
+<li>先 <code>setAlarmForNotification(...)</code></li>
+<li>成功后写入 <code>_scheduledNotifications</code></li>
+<li>再 <code>saveNotifications()</code> 到 <code>scheduled_notifications.pb</code></li>
+</ul>
+<p><code>setAlarmForNotification(...)</code> 支持：</p>
+<ul>
+<li>指定年月日 + 时分</li>
+<li>仅时分（自动当天/明天）</li>
+<li><code>repeatDaily</code> 每天重复</li>
+</ul>
+<hr />
+<h2 id="4-fcm">4) 推送通知系统（FCM）<a class="headerlink" href="#4-fcm" title="Permanent link">&para;</a></h2>
+<p><code>GalleryFcmMessagingService.onMessageReceived(...)</code>：</p>
+<ul>
+<li>读取 <code>data["deeplink"]</code>、<code>data["image_url"]</code>、<code>title/body</code></li>
+<li><code>sendNotification(...)</code> 里创建 channel + PendingIntent</li>
+<li>deeplink 存在时，点击通知直接按 deeplink 打开对应页面</li>
+</ul>
+<hr />
+<h2 id="5">5) 开机恢复<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p><code>BootReceiver.onReceive(...)</code> 监听 <code>ACTION_BOOT_COMPLETED</code>：</p>
+<ul>
+<li>通过 Hilt entry point 拿到 <code>NotificationScheduleManager</code></li>
+<li>调 <code>rescheduleAllNotifications()</code></li>
+</ul>
+<p>这样手机重启后，之前的提醒不会丢。</p>
+<hr />
+<h2 id="6-manifest">6) Manifest 中的关键接线<a class="headerlink" href="#6-manifest" title="Permanent link">&para;</a></h2>
+<p><code>AndroidManifest.xml</code> 里有这些硬连接：</p>
+<ul>
+<li><code>androidx.work.impl.foreground.SystemForegroundService</code></li>
+<li><code>.GalleryFcmMessagingService</code> + <code>com.google.firebase.MESSAGING_EVENT</code></li>
+<li><code>notifications.NotificationReceiver</code></li>
+<li><code>notifications.BootReceiver</code> + <code>BOOT_COMPLETED</code></li>
+<li>深链 <code>scheme="com.google.ai.edge.gallery"</code></li>
+</ul>
+<p>权限也明确声明了：</p>
+<ul>
+<li><code>FOREGROUND_SERVICE_DATA_SYNC</code></li>
+<li><code>POST_NOTIFICATIONS</code></li>
+<li><code>RECEIVE_BOOT_COMPLETED</code></li>
+<li><code>INTERNET</code></li>
+</ul>
+<hr />
+<h2 id="_4">流程图（模型下载全流程）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant UI as ModelManagerViewModel
+    participant Repo as DownloadRepository
+    participant WM as WorkManager
+    participant W as DownloadWorker
+    participant FS as 文件系统
+
+    UI-&gt;&gt;Repo: downloadModel(task,model)
+    Repo-&gt;&gt;WM: enqueueUniqueWork
+    WM-&gt;&gt;W: 启动 doWork
+    W-&gt;&gt;FS: 下载/续传/写 tmp
+    W--&gt;&gt;Repo: progress(Data)
+    Repo--&gt;&gt;UI: setDownloadStatus(IN_PROGRESS)
+    W-&gt;&gt;FS: rename tmp + unzip
+    W--&gt;&gt;Repo: SUCCEEDED
+    Repo--&gt;&gt;UI: setDownloadStatus(SUCCEEDED)</code></pre>
+<hr />
+<h2 id="_5">一个真实小例子（为什么通知点击能直达模型页）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>链路是这样的：</p>
+<ol>
+<li><code>DownloadRepository.sendNotification(...)</code> 里拼 deeplink：<br />
+<code>com.google.ai.edge.gallery://model/$taskId/$modelName</code></li>
+<li>通知点击后进入 <code>MainActivity</code>。</li>
+<li><code>MainActivity</code> 把 deeplink 写进 <code>intent.data</code>。</li>
+<li><code>GalleryNavGraph</code> 解析 <code>intent.data</code>，跳到 <code>route_model/{taskId}/{modelName}</code>。</li>
+</ol>
+<p>所以“下载完成通知 -&gt; 点一下直达模型页”是完整打通的。</p>
+<hr />
+<h2 id="downloadworker">深入代码：DownloadWorker 状态与失败处理<a class="headerlink" href="#downloadworker" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>关键动作</th>
+<th>失败后行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>准备阶段</td>
+<td>读取 inputData、创建 tmp 文件</td>
+<td><code>Result.failure()</code>，状态置 FAILED</td>
+</tr>
+<tr>
+<td>下载阶段</td>
+<td>HTTP 请求 + Range 续传 + 进度上报</td>
+<td>记录错误，保留可续传 tmp</td>
+</tr>
+<tr>
+<td>收尾阶段</td>
+<td>tmp rename 正式文件</td>
+<td>rename 失败则失败并保留上下文</td>
+</tr>
+<tr>
+<td>解压阶段</td>
+<td>unzip 到目标目录并删 zip</td>
+<td>解压失败置 FAILED，避免伪成功</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">深入代码：通知调度规则表（一次性/重复）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>触发条件</th>
+<th>调度方式</th>
+<th>过期策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一次性（指定日期）</td>
+<td>到达具体年月日时分</td>
+<td><code>AlarmManager</code> 单次闹钟</td>
+<td>过期后删除记录</td>
+</tr>
+<tr>
+<td>一次性（仅时分）</td>
+<td>当天未过点用当天，过点用明天</td>
+<td>动态算最近一次时间</td>
+<td>触发后删除记录</td>
+</tr>
+<tr>
+<td>每日重复</td>
+<td><code>repeatDaily=true</code></td>
+<td>每次触发后重排下一天</td>
+<td>长期保留直到用户取消</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="fcm">补充流程图：FCM 到页面跳转全链路<a class="headerlink" href="#fcm" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[FCM message] --&gt; B[FcmMessagingService.onMessageReceived]
+    B --&gt; C{含 deeplink?}
+    C --&gt;|是| D[PendingIntent 携带 deeplink]
+    C --&gt;|否| E[普通通知]
+    D --&gt; F[用户点击通知]
+    E --&gt; F
+    F --&gt; G[MainActivity.onCreate/onNewIntent]
+    G --&gt; H[intent.data 写入状态]
+    H --&gt; I[GalleryNavGraph 解析并导航]</code></pre>
+<hr />
+<h2 id="manifest">Manifest 接线检查清单（排错时按这个看）<a class="headerlink" href="#manifest" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>DownloadWorker</code> 对应 WorkManager 依赖和前台服务权限是否都在。  </li>
+<li><code>GalleryFcmMessagingService</code> 是否声明了 <code>com.google.firebase.MESSAGING_EVENT</code>。  </li>
+<li><code>NotificationReceiver</code>、<code>BootReceiver</code> 是否在 manifest 注册且 exported 设置符合系统要求。  </li>
+<li>deeplink scheme 是否与代码里生成的 URI 完全一致（<code>com.google.ai.edge.gallery</code>）。  </li>
+</ol>
+<hr />
+<h2 id="_7">排障提示（系统与后台）<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>下载完成但 UI 没更新</strong>：先看 WorkInfo 是否 SUCCEEDED，再看 ViewModel 是否收到 observer 回调。  </li>
+<li><strong>重启后通知消失</strong>：检查 <code>BootReceiver</code> 是否触发，以及 <code>rescheduleAllNotifications()</code> 是否读取到持久化数据。  </li>
+<li><strong>推送点击不跳转</strong>：优先核对通知里 deeplink 格式与导航路由参数是否匹配。  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

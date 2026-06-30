@@ -1,0 +1,1244 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="02-navigation-and-page-flow.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 核心架构 01：启动与应用层 - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-01" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 核心架构 01：启动与应用层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="01-startup-and-app-layer.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（谁管谁）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级，实打实）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-galleryapplicationoncreate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) GalleryApplication.onCreate()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mainactivityoncreate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) MainActivity.onCreate()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2) MainActivity.onCreate()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-deeplink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 先处理 deeplink
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. 立刻启动模型目录加载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-splash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Splash 不是“贴图”，是有时序控制的
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. 启动后界面与设备行为
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-galleryapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) GalleryApp 很薄，但很关键
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-appmodule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) AppModule 怎么把底层零件接好
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（从点图标到看到首页）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（通知跳转）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：关键函数拆解表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：启动时序的“为什么”
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="深入代码：启动时序的“为什么”">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-superoncreatenull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 为什么 super.onCreate(null)？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-loadmodelallowlist-splash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 为什么 loadModelAllowlist() 放在 splash 阶段？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-setcontent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) 为什么有两条 setContent() 路？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充流程图：冷启动的分支路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（出问题先看哪里）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-data-and-state-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-runtime-inference-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-task-extension-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-ui-component-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-system-and-background.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（谁管谁）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级，实打实）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-galleryapplicationoncreate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) GalleryApplication.onCreate()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mainactivityoncreate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) MainActivity.onCreate()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2) MainActivity.onCreate()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-deeplink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 先处理 deeplink
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. 立刻启动模型目录加载
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-splash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Splash 不是“贴图”，是有时序控制的
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. 启动后界面与设备行为
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-galleryapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) GalleryApp 很薄，但很关键
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-appmodule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) AppModule 怎么把底层零件接好
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（从点图标到看到首页）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（通知跳转）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：关键函数拆解表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：启动时序的“为什么”
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="深入代码：启动时序的“为什么”">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-superoncreatenull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 为什么 super.onCreate(null)？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-loadmodelallowlist-splash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 为什么 loadModelAllowlist() 放在 splash 阶段？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-setcontent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) 为什么有两条 setContent() 路？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充流程图：冷启动的分支路径
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（出问题先看哪里）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-01">Android 核心架构 01：启动与应用层<a class="headerlink" href="#android-01" title="Permanent link">&para;</a></h1>
+<h2 id="_1">这章讲什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>把 App 想成一所学校：</p>
+<ul>
+<li><code>GalleryApplication</code> 是<strong>总务老师</strong>：每天上学先把灯、广播、值班表准备好。</li>
+<li><code>MainActivity</code> 是<strong>校门老师</strong>：同学进门后，决定先去哪里（首页、外部链接、通知跳转）。</li>
+<li><code>GalleryApp</code> 是<strong>走廊入口</strong>：把大家带到真正的教室（导航系统）。</li>
+</ul>
+<hr />
+<h2 id="_2">架构图（谁管谁）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[Android 进程启动] --&gt; B[GalleryApplication.onCreate]
+    B --&gt; B1[NotificationScheduleManager.initialize]
+    B --&gt; B2[DataStoreRepository.readTheme]
+    B --&gt; B3[FirebaseApp.initializeApp]
+
+    A --&gt; C[MainActivity.onCreate]
+    C --&gt; C1[解析 deeplink extra]
+    C --&gt; C2[modelManagerViewModel.loadModelAllowlist]
+    C --&gt; C3[installSplashScreen + 退出动画]
+    C --&gt; C4[setContent -&gt; GalleryApp]
+
+    C4 --&gt; D[GalleryNavHost]</code></pre>
+<hr />
+<h2 id="_3">关键代码细节（函数级，实打实）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="1-galleryapplicationoncreate">1) <code>GalleryApplication.onCreate()</code><a class="headerlink" href="#1-galleryapplicationoncreate" title="Permanent link">&para;</a></h2>
+<p>代码里做了 3 件非常具体的事：</p>
+<ul>
+<li><code>notificationScheduleManager.initialize()</code><br />
+  含义：把之前保存的通知计划恢复进内存（比如昨天设的提醒）。</li>
+<li><code>ThemeSettings.themeOverride.value = dataStoreRepository.readTheme()</code><br />
+  含义：读取用户主题（亮色/暗色/自动），避免启动后才突然换主题。</li>
+<li><code>FirebaseApp.initializeApp(this)</code><br />
+  含义：初始化 Firebase（埋点、推送能力的底座）。</li>
+</ul>
+<hr />
+<h2 id="2-mainactivityoncreate">2) <code>MainActivity.onCreate()</code><a class="headerlink" href="#2-mainactivityoncreate" title="Permanent link">&para;</a></h2>
+<h3 id="a-deeplink">A. 先处理 deeplink<a class="headerlink" href="#a-deeplink" title="Permanent link">&para;</a></h3>
+<p>在 <code>onCreate</code> 和 <code>onNewIntent</code> 里都有同一套逻辑：</p>
+<ul>
+<li>读 <code>intent.getStringExtra("deeplink")</code></li>
+<li>如果是 <code>http/https</code>：<code>startActivity(Intent.ACTION_VIEW, link.toUri())</code>（交给浏览器）</li>
+<li>否则：<code>intent.data = link.toUri()</code>（交给 App 内导航）</li>
+</ul>
+<p>这就是为什么从推送点进来时，有的会开浏览器，有的会直接进 App 页。</p>
+<h3 id="b">B. 立刻启动模型目录加载<a class="headerlink" href="#b" title="Permanent link">&para;</a></h3>
+<ul>
+<li>调用：<code>modelManagerViewModel.loadModelAllowlist()</code></li>
+<li>含义：尽早把模型列表准备好，首页任务卡和模型页才有内容。</li>
+</ul>
+<h3 id="c-splash">C. Splash 不是“贴图”，是有时序控制的<a class="headerlink" href="#c-splash" title="Permanent link">&para;</a></h3>
+<p><code>installSplashScreen()</code> 后，代码做了两层兜底：</p>
+<ol>
+<li>如果系统 splash 因系统策略没显示，1 秒后也会调用 <code>setContent()</code>；</li>
+<li>如果 splash 正常显示，就在 <code>setOnExitAnimationListener</code> 里做淡出：</li>
+<li>算系统图标动画剩余时间</li>
+<li>先挂载主内容</li>
+<li>再 alpha 淡出 splash</li>
+</ol>
+<p>这样不会黑屏，也不会突然闪白。</p>
+<h3 id="d">D. 启动后界面与设备行为<a class="headerlink" href="#d" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>enableEdgeToEdge()</code>：内容延伸到状态栏/导航栏区域</li>
+<li>Android Q+：<code>window.isNavigationBarContrastEnforced = false</code></li>
+<li><code>FLAG_KEEP_SCREEN_ON</code>：演示场景下屏幕常亮</li>
+</ul>
+<hr />
+<h2 id="3-galleryapp">3) <code>GalleryApp</code> 很薄，但很关键<a class="headerlink" href="#3-galleryapp" title="Permanent link">&para;</a></h2>
+<p><code>GalleryApp(...)</code> 只做一件事：</p>
+<ul>
+<li><code>GalleryNavHost(navController, modelManagerViewModel)</code></li>
+</ul>
+<p>好处：入口层不堆业务逻辑，后续改导航时风险小。</p>
+<hr />
+<h2 id="4-appmodule">4) <code>AppModule</code> 怎么把底层零件接好<a class="headerlink" href="#4-appmodule" title="Permanent link">&para;</a></h2>
+<p><code>di/AppModule.kt</code> 用 Hilt 提供单例：</p>
+<ul>
+<li>5 个 DataStore（settings/user_data/cutouts/benchmark_results/skills）</li>
+<li><code>DataStoreRepository</code></li>
+<li><code>DownloadRepository</code></li>
+<li><code>AppLifecycleProvider</code>（实现是 <code>GalleryLifecycleProvider</code>）</li>
+<li><code>Moshi</code></li>
+</ul>
+<p>为什么要 <code>AppLifecycleProvider</code>？</p>
+<ul>
+<li>导航层会在前后台切换时调用 <code>setAppInForeground(...)</code></li>
+<li>下载仓库可以据此判断：App 在前台就少发系统通知，避免打扰。</li>
+</ul>
+<hr />
+<h2 id="_4">流程图（从点图标到看到首页）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant OS as Android 系统
+    participant App as GalleryApplication
+    participant Act as MainActivity
+    participant VM as ModelManagerViewModel
+    participant UI as GalleryNavHost
+
+    OS-&gt;&gt;App: 创建 Application
+    App-&gt;&gt;App: 初始化通知/主题/Firebase
+    OS-&gt;&gt;Act: 创建 MainActivity
+    Act-&gt;&gt;Act: 处理 deeplink extra
+    Act-&gt;&gt;VM: loadModelAllowlist()
+    Act-&gt;&gt;Act: installSplashScreen()
+    Act-&gt;&gt;UI: setContent -&gt; GalleryApp -&gt; GalleryNavHost</code></pre>
+<hr />
+<h2 id="_5">一个真实小例子（通知跳转）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>场景：用户点开通知，通知里带了 <code>deeplink=com.google.ai.edge.gallery://model/llm_chat/Gemma-4-E4B-it</code></p>
+<p>发生顺序：</p>
+<ol>
+<li><code>MainActivity.onNewIntent</code> 收到 intent。</li>
+<li>发现 <code>deeplink</code> 不是 http，写入 <code>intent.data</code>。</li>
+<li><code>GalleryNavGraph</code> 检测到 <code>intent.data</code>，解析出 taskId 和 modelName。</li>
+<li>导航到 <code>route_model/{taskId}/{modelName}</code>。</li>
+<li>页面显示对应模型的聊天页。</li>
+</ol>
+<p>这不是“概念上会跳转”，而是代码里真的按这 5 步跑。</p>
+<hr />
+<h2 id="_6">深入代码：关键函数拆解表<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>在哪里</th>
+<th>输入</th>
+<th>输出/副作用</th>
+<th>失败或特殊分支</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GalleryApplication.onCreate()</code></td>
+<td><code>GalleryApplication.kt</code></td>
+<td>无</td>
+<td>初始化通知调度、主题、Firebase</td>
+<td>如果 DataStore 读取慢，会延迟主题应用</td>
+</tr>
+<tr>
+<td><code>MainActivity.onCreate()</code></td>
+<td><code>MainActivity.kt</code></td>
+<td><code>intent</code></td>
+<td>处理 deeplink、触发 allowlist 加载、挂载 Compose</td>
+<td><code>super.onCreate(null)</code> 会丢弃系统恢复状态（这是故意行为）</td>
+</tr>
+<tr>
+<td><code>MainActivity.onNewIntent()</code></td>
+<td><code>MainActivity.kt</code></td>
+<td>新 <code>intent</code></td>
+<td>更新 <code>intent.data</code>，让导航层消费</td>
+<td>deeplink 非法时会导致后续导航分支无法命中</td>
+</tr>
+<tr>
+<td><code>GalleryApp(...)</code></td>
+<td><code>GalleryApp.kt</code></td>
+<td><code>modelManagerViewModel</code></td>
+<td>进入 <code>GalleryNavHost</code></td>
+<td>无复杂分支</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_7">深入代码：启动时序的“为什么”<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="1-superoncreatenull">1) 为什么 <code>super.onCreate(null)</code>？<a class="headerlink" href="#1-superoncreatenull" title="Permanent link">&para;</a></h3>
+<p>这句不是笔误。代码注释已写明：<br />
+目的是<strong>不恢复上次被系统杀掉时的页面栈</strong>，强制回到 Home，避免恢复到中间态页面导致状态错乱。</p>
+<h3 id="2-loadmodelallowlist-splash">2) 为什么 <code>loadModelAllowlist()</code> 放在 splash 阶段？<a class="headerlink" href="#2-loadmodelallowlist-splash" title="Permanent link">&para;</a></h3>
+<p>因为首页任务卡和模型列表依赖 allowlist。提前触发可减少“进首页后才开始空转”的等待感。</p>
+<h3 id="3-setcontent">3) 为什么有两条 <code>setContent()</code> 路？<a class="headerlink" href="#3-setcontent" title="Permanent link">&para;</a></h3>
+<ul>
+<li>路 A：1 秒兜底（某些系统版本 splash 会被优化掉）</li>
+<li>路 B：在 <code>setOnExitAnimationListener</code> 里按系统动画节奏切入</li>
+</ul>
+<p>两条路最终都受 <code>contentSet</code> 保护，保证 Compose 只挂载一次。</p>
+<hr />
+<h2 id="_8">补充流程图：冷启动的分支路径<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[MainActivity.onCreate] --&gt; B{有 deeplink extra 吗}
+    B --&gt;|有| C{http/https 吗}
+    C --&gt;|是| D[外部浏览器打开]
+    C --&gt;|否| E[intent.data = uri]
+    B --&gt;|无| F[继续]
+    E --&gt; F
+    F --&gt; G[loadModelAllowlist]
+    G --&gt; H[installSplashScreen]
+    H --&gt; I{系统 splash 是否正常显示}
+    I --&gt;|否| J[1秒后 setContent 兜底]
+    I --&gt;|是| K[退出动画回调 setContent]</code></pre>
+<hr />
+<h2 id="_9">排障提示（出问题先看哪里）<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>通知点进来没跳转</strong>：先看 <code>MainActivity.onNewIntent</code> 是否拿到 <code>deeplink</code>，再看 <code>intent.data</code> 是否被正确赋值。  </li>
+<li><strong>启动后白屏时间长</strong>：看 <code>loadModelAllowlist()</code> 是否网络阻塞；看 splash 退出回调是否触发。  </li>
+<li><strong>主题闪烁</strong>：看 <code>GalleryApplication.onCreate</code> 中 <code>readTheme()</code> 是否及时执行。  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1481 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="02-navigation-and-page-flow.html">
+      
+      
+        <link rel="next" href="04-runtime-inference-layer.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 核心架构 03：数据与状态层 - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-03" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 核心架构 03：数据与状态层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-startup-and-app-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="03-data-and-state-layer.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（数据从哪里来，去哪里）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Model 数据结构是如何描述模型的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-config-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Config 如何把“参数”变成 UI 可编辑项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-datastorerepository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) DataStoreRepository 统一持久化入口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-modelmanagerviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) ModelManagerViewModel 是状态总闸门
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 下载仓储的实逻辑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（加载模型清单到首页展示）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（导入模型后为什么马上能看到）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modelmanageruistate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：ModelManagerUiState 字段意义（高频）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allowlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：allowlist 加载分支矩阵
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：下载状态机（ViewModel 视角）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：初始化状态机（模型实例）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：配置加载（不是一句话，按代码逐步走）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configdialog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：配置修改后如何生效（ConfigDialog 到重初始化）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewmodel-repository-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：模型下载全链路（ViewModel -&gt; Repository -&gt; Worker）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="深入代码：模型下载全链路（ViewModel -&gt; Repository -&gt; Worker）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-modelmanagerviewmodeldownloadmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 入口分支（ModelManagerViewModel.downloadModel）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-repository-defaultdownloadrepositorydownloadmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Repository 做的事（DefaultDownloadRepository.downloadModel）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-worker-downloadworkerdowork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Worker 实际下载细节（DownloadWorker.doWork）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workinfo-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：下载状态映射（WorkInfo -&gt; UI）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：模型加载（初始化）完整链路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（数据层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-runtime-inference-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-task-extension-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-ui-component-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-system-and-background.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（数据从哪里来，去哪里）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Model 数据结构是如何描述模型的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-config-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Config 如何把“参数”变成 UI 可编辑项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-datastorerepository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) DataStoreRepository 统一持久化入口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-modelmanagerviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) ModelManagerViewModel 是状态总闸门
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 下载仓储的实逻辑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（加载模型清单到首页展示）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（导入模型后为什么马上能看到）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modelmanageruistate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：ModelManagerUiState 字段意义（高频）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allowlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：allowlist 加载分支矩阵
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：下载状态机（ViewModel 视角）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：初始化状态机（模型实例）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：配置加载（不是一句话，按代码逐步走）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configdialog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：配置修改后如何生效（ConfigDialog 到重初始化）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#viewmodel-repository-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：模型下载全链路（ViewModel -&gt; Repository -&gt; Worker）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="深入代码：模型下载全链路（ViewModel -&gt; Repository -&gt; Worker）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-modelmanagerviewmodeldownloadmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 入口分支（ModelManagerViewModel.downloadModel）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-repository-defaultdownloadrepositorydownloadmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Repository 做的事（DefaultDownloadRepository.downloadModel）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-worker-downloadworkerdowork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Worker 实际下载细节（DownloadWorker.doWork）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workinfo-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：下载状态映射（WorkInfo -&gt; UI）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：模型加载（初始化）完整链路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（数据层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-03">Android 核心架构 03：数据与状态层<a class="headerlink" href="#android-03" title="Permanent link">&para;</a></h1>
+<h2 id="_1">这章讲什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>这一层像“图书馆管理员 + 仓库管理员”：</p>
+<ul>
+<li>图书馆管理员：把数据分门别类存好（DataStore）。</li>
+<li>仓库管理员：负责模型下载、续传、失败重试（DownloadRepository + Worker）。</li>
+<li>总登记员：把“现在系统是什么状态”统一发布给页面（ModelManagerViewModel）。</li>
+</ul>
+<hr />
+<h2 id="_2">架构图（数据从哪里来，去哪里）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    A[Allowlist JSON / Imported Model / 本地文件] --&gt; B[ModelManagerViewModel]
+    C[DataStore settings/user_data/skills...] --&gt; B
+    D[WorkManager + DownloadWorker] --&gt; B
+    B --&gt; E["ModelManagerUiState (StateFlow)"]
+    E --&gt; F[HomeScreen]
+    E --&gt; G[ModelManager]
+    E --&gt; H[Task Screens]</code></pre>
+<hr />
+<h2 id="_3">关键代码细节（函数级）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="1-model">1) <code>Model</code> 数据结构是如何描述模型的<a class="headerlink" href="#1-model" title="Permanent link">&para;</a></h2>
+<p><code>Model.kt</code> 里的 <code>data class Model</code> 不是只有名字，它包含了完整运行信息：</p>
+<ul>
+<li>下载信息：<code>url</code>、<code>downloadFileName</code>、<code>version</code>、<code>extraDataFiles</code></li>
+<li>运行信息：<code>runtimeType</code>、<code>accelerators</code>、<code>capabilities</code></li>
+<li>本地路径策略：<code>localFileRelativeDirPathOverride</code>、<code>localModelFilePathOverride</code></li>
+<li>运行态：<code>instance</code>、<code>initializing</code>、<code>cleanUpAfterInit</code></li>
+</ul>
+<p>关键方法：</p>
+<ul>
+<li><code>preProcess()</code>：初始化默认配置值 + 计算 <code>totalBytes</code></li>
+<li><code>getPath(context, fileName)</code>：统一计算模型文件路径（导入模型、下载模型、zip 解压路径都在这里处理）</li>
+</ul>
+<hr />
+<h2 id="2-config-ui">2) <code>Config</code> 如何把“参数”变成 UI 可编辑项<a class="headerlink" href="#2-config-ui" title="Permanent link">&para;</a></h2>
+<p><code>Config.kt</code> 里定义了：</p>
+<ul>
+<li><code>ConfigEditorType</code>（滑杆、开关、分段按钮等）</li>
+<li><code>ValueType</code>（INT/FLOAT/STRING/BOOLEAN）</li>
+<li><code>createLlmChatConfigs(...)</code>、<code>createAICoreConfigs(...)</code></li>
+</ul>
+<p>意思是：模型参数不是散乱变量，而是“可生成 UI 的结构化配置”。</p>
+<hr />
+<h2 id="3-datastorerepository">3) <code>DataStoreRepository</code> 统一持久化入口<a class="headerlink" href="#3-datastorerepository" title="Permanent link">&para;</a></h2>
+<p><code>DefaultDataStoreRepository</code> 把大量数据操作收拢在一处，例如：</p>
+<ul>
+<li><code>saveTheme</code> / <code>readTheme</code></li>
+<li><code>saveAccessTokenData</code> / <code>readAccessTokenData</code></li>
+<li><code>saveImportedModels</code> / <code>readImportedModels</code></li>
+<li><code>addSkill</code> / <code>setSkillSelected</code> / <code>deleteSkill</code></li>
+<li><code>addBenchmarkResult</code> / <code>getAllBenchmarkResults</code></li>
+</ul>
+<p>对应 proto 结构可追到：</p>
+<ul>
+<li><code>settings.proto</code> 的 <code>Settings</code></li>
+<li><code>settings.proto</code> 的 <code>UserData</code></li>
+<li><code>chat_history.proto</code> 的 <code>ChatSessionProto</code></li>
+</ul>
+<hr />
+<h2 id="4-modelmanagerviewmodel">4) <code>ModelManagerViewModel</code> 是状态总闸门<a class="headerlink" href="#4-modelmanagerviewmodel" title="Permanent link">&para;</a></h2>
+<p><code>ModelManagerUiState</code> 里最重要的字段：</p>
+<ul>
+<li><code>tasks</code></li>
+<li><code>tasksByCategory</code></li>
+<li><code>modelDownloadStatus</code></li>
+<li><code>modelInitializationStatus</code></li>
+<li><code>selectedModel</code></li>
+</ul>
+<p>关键函数：</p>
+<ul>
+<li><code>loadModelAllowlist()</code>：加载 allowlist（本地 test -&gt; 网络 -&gt; 本地缓存）</li>
+<li><code>createUiState()</code>：合并 allowlist 模型 + 导入模型 + 历史输入</li>
+<li><code>downloadModel(...)</code>：分发到 AICore 下载或 WorkManager 下载</li>
+<li><code>initializeModel(...)</code>：统一初始化入口（内部调用 <code>CustomTask.initializeModelFn</code>）</li>
+<li><code>cleanupModel(...)</code>：释放实例并回写状态</li>
+<li><code>setDownloadStatus(...)</code>：下载状态写入 <code>_uiState</code></li>
+</ul>
+<hr />
+<h2 id="5">5) 下载仓储的实逻辑<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p><code>DownloadRepository.downloadModel(...)</code> 做了非常实在的事情：</p>
+<ol>
+<li>用 <code>Data.Builder</code> 写入下载参数（url、modelName、extraData URL 等）。</li>
+<li>创建 <code>OneTimeWorkRequest&lt;DownloadWorker&gt;</code>。</li>
+<li><code>enqueueUniqueWork(model.name, REPLACE, workRequest)</code>。</li>
+<li>监听 <code>WorkInfo</code> 状态并映射到：</li>
+<li><code>IN_PROGRESS</code></li>
+<li><code>UNZIPPING</code></li>
+<li><code>SUCCEEDED</code></li>
+<li><code>FAILED</code> / <code>NOT_DOWNLOADED</code></li>
+</ol>
+<p>下载成功/失败后还会触发通知和埋点事件。</p>
+<hr />
+<h2 id="_4">流程图（加载模型清单到首页展示）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant VM as ModelManagerViewModel
+    participant Net as 远程 Allowlist
+    participant Disk as 本地文件/缓存
+    participant Task as CustomTask 列表
+    participant UI as HomeScreen
+
+    VM-&gt;&gt;Disk: 读 model_allowlist_test.json
+    alt 本地没有
+        VM-&gt;&gt;Net: 请求 allowlist
+        alt 远程失败
+            VM-&gt;&gt;Disk: 读 model_allowlist.json 缓存
+        end
+    end
+    VM-&gt;&gt;Task: 按 taskTypes 注入 model
+    VM-&gt;&gt;VM: processTasks + groupTasksByCategory
+    VM-&gt;&gt;UI: 发布 uiState.tasks / tasksByCategory</code></pre>
+<hr />
+<h2 id="_5">一个真实小例子（导入模型后为什么马上能看到）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>函数：<code>addImportedLlmModel(info: ImportedModel)</code></p>
+<p>它做了这些“真动作”：</p>
+<ol>
+<li>用 <code>createModelFromImportedModelInfo</code> 生成 <code>Model</code>。</li>
+<li>把这个模型按能力加进多个任务：</li>
+<li><code>llm_chat</code></li>
+<li><code>llm_prompt_lab</code></li>
+<li><code>llm_agent_chat</code></li>
+<li>若支持图片，再加到 <code>llm_ask_image</code> 等</li>
+<li>更新 <code>modelDownloadStatus</code> 和 <code>modelInitializationStatus</code>。</li>
+<li>保存到 DataStore 的 <code>imported_model</code> 列表。</li>
+</ol>
+<p>结果：UI 立刻能看到，不用重启 App。</p>
+<hr />
+<h2 id="modelmanageruistate">深入代码：<code>ModelManagerUiState</code> 字段意义（高频）<a class="headerlink" href="#modelmanageruistate" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>谁更新它</th>
+<th>页面谁在用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tasks</code></td>
+<td>当前可用任务列表</td>
+<td><code>loadModelAllowlist/createUiState</code></td>
+<td>Home、导航分发</td>
+</tr>
+<tr>
+<td><code>tasksByCategory</code></td>
+<td>按分类分组后的任务</td>
+<td><code>groupTasksByCategory</code></td>
+<td>Home tab + pager</td>
+</tr>
+<tr>
+<td><code>modelDownloadStatus</code></td>
+<td>每个模型下载状态</td>
+<td><code>setDownloadStatus</code></td>
+<td>模型列表、下载按钮</td>
+</tr>
+<tr>
+<td><code>modelInitializationStatus</code></td>
+<td>每个模型初始化状态</td>
+<td><code>updateModelInitializationStatus</code></td>
+<td>聊天页可发送状态判断</td>
+</tr>
+<tr>
+<td><code>selectedModel</code></td>
+<td>当前选中的模型</td>
+<td><code>selectModel</code></td>
+<td>任务页、配置页</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="allowlist">深入代码：allowlist 加载分支矩阵<a class="headerlink" href="#allowlist" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>数据源</th>
+<th>成功后动作</th>
+<th>失败后动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>/data/local/tmp/model_allowlist_test.json</code></td>
+<td>解析并使用</td>
+<td>进入步骤 2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>远程 <code>ALLOWLIST_BASE_URL/version.json</code></td>
+<td>保存到本地缓存并使用</td>
+<td>进入步骤 3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>本地缓存 <code>externalFilesDir/model_allowlist.json</code></td>
+<td>解析并使用</td>
+<td><code>loadingModelAllowlistError</code> 置为失败</td>
+</tr>
+</tbody>
+</table>
+<p>补充：<code>loadModelAllowlist()</code> 里还会过滤：</p>
+<ul>
+<li><code>disabled == true</code> 的模型</li>
+<li>设备不支持 AICore 的模型</li>
+<li>NPU-only 且不匹配当前 SOC 的模型</li>
+</ul>
+<hr />
+<h2 id="viewmodel">深入代码：下载状态机（ViewModel 视角）<a class="headerlink" href="#viewmodel" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NOT_DOWNLOADED
+    NOT_DOWNLOADED --&gt; IN_PROGRESS: downloadModel()
+    IN_PROGRESS --&gt; UNZIPPING: worker progress(start_unzipping)
+    IN_PROGRESS --&gt; SUCCEEDED: WorkInfo.SUCCEEDED
+    IN_PROGRESS --&gt; FAILED: WorkInfo.FAILED
+    IN_PROGRESS --&gt; NOT_DOWNLOADED: WorkInfo.CANCELLED
+    FAILED --&gt; NOT_DOWNLOADED: delete/reset
+    SUCCEEDED --&gt; NOT_DOWNLOADED: deleteModel()</code></pre>
+<p>对应代码点：</p>
+<ul>
+<li><code>DownloadRepository.observerWorkerProgress(...)</code></li>
+<li><code>ModelManagerViewModel.setDownloadStatus(...)</code></li>
+</ul>
+<hr />
+<h2 id="_6">深入代码：初始化状态机（模型实例）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>核心判定在：</p>
+<ul>
+<li><code>initializeModel(...)</code></li>
+<li><code>cleanupModel(...)</code></li>
+<li><code>updateModelInitializationStatus(...)</code></li>
+</ul>
+<p>关键保护逻辑：</p>
+<ol>
+<li>已初始化且非强制初始化 -&gt; 直接跳过。</li>
+<li>正在初始化时再请求清理 -&gt; 置 <code>cleanUpAfterInit = true</code>，等 init 完成后再清理。</li>
+<li>stale cleanup（旧 instance）会被拒绝，避免新实例被误杀。</li>
+</ol>
+<hr />
+<h2 id="_7">深入代码：配置加载（不是一句话，按代码逐步走）<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>这里的“配置加载”其实有 <strong>3 层来源</strong>，最终都会落在 <code>model.configValues</code>：</p>
+<ol>
+<li><strong>allowlist 默认配置层</strong>：<code>AllowedModel.defaultConfig</code>（<code>topK/topP/temperature/maxTokens/accelerators</code>）  </li>
+<li><strong>模型配置结构层</strong>：<code>AllowedModel.toModel()</code> 里调用 <code>createLlmChatConfigs/createAICoreConfigs</code> 生成 <code>configs</code>（每项带 <code>valueType</code>、<code>needReinitialization</code>）  </li>
+<li><strong>运行时当前值层</strong>：<code>Model.preProcess()</code> 把每个 <code>config.defaultValue</code> 写进 <code>model.configValues</code></li>
+</ol>
+<p>关键代码链路（真实函数）：</p>
+<ol>
+<li><code>ModelManagerViewModel.loadModelAllowlist()</code> 读到 JSON 后，遍历 <code>allowedModel</code>。  </li>
+<li><code>allowedModel.toModel()</code> 把 JSON 字段转换成 <code>Model + List&lt;Config&gt;</code>。  </li>
+<li><code>task.models.add(model)</code> 后执行 <code>processTasks()</code>，每个 model 都会 <code>preProcess()</code>。  </li>
+<li><code>preProcess()</code> 把默认值落到 <code>model.configValues[key.label]</code>。  </li>
+</ol>
+<p>所以首次进入页面时，UI 看到的参数值不是“临时写死”，而是从 allowlist 真正变换过来的。</p>
+<hr />
+<h2 id="configdialog">深入代码：配置修改后如何生效（ConfigDialog 到重初始化）<a class="headerlink" href="#configdialog" title="Permanent link">&para;</a></h2>
+<p>配置修改不是“改个数字就完了”，链路是：</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant UI as ConfigDialog
+    participant MP as ModelPageAppBar
+    participant M as Model
+    participant VM as ModelManagerViewModel
+
+    UI-&gt;&gt;MP: onOk(curConfigValues)
+    MP-&gt;&gt;MP: 对比 old/new + convertValueToTargetType
+    MP-&gt;&gt;M: model.prevConfigValues = old
+    MP-&gt;&gt;M: model.configValues = curConfigValues
+    MP-&gt;&gt;VM: updateConfigValuesUpdateTrigger()
+    alt 存在 needReinitialization=true 的改动
+        MP-&gt;&gt;VM: initializeModel(force=true)
+    end</code></pre>
+<p>关键细节（<code>ModelPageAppBar.kt</code>）：</p>
+<ul>
+<li>会逐项比较 <code>modelConfigs</code>，不是盲目重初始化。  </li>
+<li>只有改动项里存在 <code>needReinitialization=true</code> 才会 <code>initializeModel(force=true)</code>。  </li>
+<li><code>model.prevConfigValues</code> 会保留，方便任务侧做差异处理。  </li>
+</ul>
+<hr />
+<h2 id="viewmodel-repository-worker">深入代码：模型下载全链路（ViewModel -&gt; Repository -&gt; Worker）<a class="headerlink" href="#viewmodel-repository-worker" title="Permanent link">&para;</a></h2>
+<h3 id="a-modelmanagerviewmodeldownloadmodel">A. 入口分支（<code>ModelManagerViewModel.downloadModel</code>）<a class="headerlink" href="#a-modelmanagerviewmodeldownloadmodel" title="Permanent link">&para;</a></h3>
+<ol>
+<li>先把 UI 状态改成 <code>IN_PROGRESS</code>。  </li>
+<li>若 <code>runtimeType == AICORE</code>：走 <code>AICoreModelHelper.downloadModel(...)</code>（不走 WorkManager）。  </li>
+<li>否则：先 <code>deleteModel(removeImportedFromModelList=false)</code> 清理旧文件，再走 <code>downloadRepository.downloadModel(...)</code>。  </li>
+</ol>
+<h3 id="b-repository-defaultdownloadrepositorydownloadmodel">B. Repository 做的事（<code>DefaultDownloadRepository.downloadModel</code>）<a class="headerlink" href="#b-repository-defaultdownloadrepositorydownloadmodel" title="Permanent link">&para;</a></h3>
+<ol>
+<li>用 <code>Data.Builder</code> 写入 worker 参数（重点 key）：  </li>
+<li><code>KEY_MODEL_URL</code>  </li>
+<li><code>KEY_MODEL_DOWNLOAD_FILE_NAME</code>  </li>
+<li><code>KEY_MODEL_COMMIT_HASH</code>  </li>
+<li><code>KEY_MODEL_EXTRA_DATA_URLS</code>  </li>
+<li><code>KEY_MODEL_TOTAL_BYTES</code>  </li>
+<li><code>KEY_MODEL_DOWNLOAD_ACCESS_TOKEN</code>  </li>
+<li>创建 <code>OneTimeWorkRequestBuilder&lt;DownloadWorker&gt;()</code>。  </li>
+<li><code>enqueueUniqueWork(model.name, ExistingWorkPolicy.REPLACE, request)</code>：同模型新任务会替换旧任务。  </li>
+<li><code>observerWorkerProgress(...)</code> 把 <code>WorkInfo</code> 映射回 UI 状态。  </li>
+</ol>
+<h3 id="c-worker-downloadworkerdowork">C. Worker 实际下载细节（<code>DownloadWorker.doWork</code>）<a class="headerlink" href="#c-worker-downloadworkerdowork" title="Permanent link">&para;</a></h3>
+<ol>
+<li>立即 <code>setForeground(createForegroundInfo(...))</code>，避免后台被系统杀。  </li>
+<li>下载主模型 + <code>extraDataFiles</code>（串行）。  </li>
+<li>如果存在 <code>*.tmp</code>：  </li>
+<li>设置 <code>Range: bytes=&lt;tmpSize&gt;-</code>  </li>
+<li>设置 <code>Accept-Encoding: identity</code>  </li>
+<li>读取 <code>Content-Range</code> 计算续传起点。  </li>
+<li>每 200ms 上报一次进度（<code>receivedBytes/downloadRate/remainingMs</code>）。  </li>
+<li>下载完把 <code>xxx.tmp</code> rename 成正式文件。  </li>
+<li>若 <code>isZip=true</code>：上报 <code>KEY_MODEL_START_UNZIPPING=true</code>，解压到 <code>unzippedDir</code>，再删除 zip。  </li>
+<li>IOException 时 <code>Result.failure(outputData[KEY_MODEL_DOWNLOAD_ERROR_MESSAGE])</code>。  </li>
+</ol>
+<hr />
+<h2 id="workinfo-ui">深入代码：下载状态映射（WorkInfo -&gt; UI）<a class="headerlink" href="#workinfo-ui" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>WorkInfo.State</th>
+<th>UI 状态</th>
+<th>额外行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ENQUEUED</code></td>
+<td>（准备态）</td>
+<td>记录下载开始时间、埋点 start</td>
+</tr>
+<tr>
+<td><code>RUNNING</code> + <code>start_unzipping=false</code></td>
+<td><code>IN_PROGRESS</code></td>
+<td>回传 bytes/rate/remaining</td>
+</tr>
+<tr>
+<td><code>RUNNING</code> + <code>start_unzipping=true</code></td>
+<td><code>UNZIPPING</code></td>
+<td>显示解压状态</td>
+</tr>
+<tr>
+<td><code>SUCCEEDED</code></td>
+<td><code>SUCCEEDED</code></td>
+<td>发送成功通知、埋点 success</td>
+</tr>
+<tr>
+<td><code>FAILED</code></td>
+<td><code>FAILED</code></td>
+<td>回传 errorMessage、埋点 failure</td>
+</tr>
+<tr>
+<td><code>CANCELLED</code></td>
+<td><code>NOT_DOWNLOADED</code></td>
+<td>清理状态</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">深入代码：模型加载（初始化）完整链路<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p><code>ModelManagerViewModel.initializeModel(...)</code> 不是简单“调用一下 helper”，它有一套防并发和防误清理逻辑：</p>
+<ol>
+<li><strong>已初始化且非 force</strong> -&gt; 直接跳过。  </li>
+<li><strong>正在初始化</strong> -&gt; 跳过并重置 <code>cleanUpAfterInit=false</code>。  </li>
+<li>调 <code>cleanupModel(...)</code> 清理旧实例。  </li>
+<li>状态置为 <code>INITIALIZING</code>，<code>model.initializing=true</code>。  </li>
+<li>读取系统提示词：<code>SystemPromptHelper.getEffectiveSystemPrompt(...)</code>。  </li>
+<li>调 <code>getCustomTaskByTaskId(task.id)?.initializeModelFn(...)</code>（真正进入具体 runtime）。  </li>
+<li>回调 <code>onDoneFn(error)</code>：  </li>
+<li><code>model.instance != null</code> -&gt; 状态 <code>INITIALIZED</code>。  </li>
+<li><code>error.isNotEmpty()</code> -&gt; 状态 <code>ERROR</code>。  </li>
+<li>如果 init 期间被请求清理（<code>cleanUpAfterInit=true</code>），init 成功后立刻再 cleanup。  </li>
+</ol>
+<p>额外关键点：<code>updateModelInitializationStatus(...)</code> 会把当前后端（来自 <code>ConfigKeys.ACCELERATOR</code>）记入 <code>initializedBackends</code>，用于区分同模型不同后端初始化历史。</p>
+<hr />
+<h2 id="_9">排障提示（数据层）<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>首页没任务</strong>：先看 <code>loadModelAllowlist()</code> 是否报错，再看 <code>loadingModelAllowlistError</code>。  </li>
+<li><strong>下载卡住</strong>：看 <code>WorkInfo</code> 是否还在 RUNNING；检查 <code>DownloadWorker</code> 是否进入前台通知。  </li>
+<li><strong>模型明明下载了却显示未下载</strong>：看 <code>isModelDownloaded()</code> 路径计算（特别是 imported/local override 场景）。  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

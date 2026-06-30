@@ -1,0 +1,1065 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="05-task-extension-layer.html">
+      
+      
+        <link rel="next" href="07-system-and-background.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 核心架构 06：UI 组件层 - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-06ui" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 核心架构 06：UI 组件层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-startup-and-app-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-data-and-state-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-runtime-inference-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-task-extension-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="06-ui-component-layer.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（页面层 + 通用组件层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-homescreen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 首页 HomeScreen(...)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-chatviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 聊天状态底座 ChatViewModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-llmchatviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) 多轮聊天 LlmChatViewModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prompt-lab-llmsingleturnviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Prompt Lab LlmSingleTurnViewModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Benchmark 页面
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（聊天页面一次发消息）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（为什么切模型不会串聊天）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：UI 状态“谁改、何时改”清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：聊天消息生命周期（从创建到落盘）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：UI 不卡顿的两个关键点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（UI 层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-system-and-background.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（页面层 + 通用组件层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-homescreen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 首页 HomeScreen(...)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-chatviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 聊天状态底座 ChatViewModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-llmchatviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) 多轮聊天 LlmChatViewModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prompt-lab-llmsingleturnviewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Prompt Lab LlmSingleTurnViewModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Benchmark 页面
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（聊天页面一次发消息）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（为什么切模型不会串聊天）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：UI 状态“谁改、何时改”清单
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：聊天消息生命周期（从创建到落盘）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：UI 不卡顿的两个关键点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（UI 层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-06ui">Android 核心架构 06：UI 组件层<a class="headerlink" href="#android-06ui" title="Permanent link">&para;</a></h1>
+<h2 id="_1">这章讲什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>UI 层就是“看得见、点得到”的所有东西：</p>
+<ul>
+<li>首页卡片</li>
+<li>模型列表</li>
+<li>聊天气泡</li>
+<li>语音按钮</li>
+<li>设置弹窗</li>
+</ul>
+<p>但它不是乱画页面，而是按模块分好工。</p>
+<hr />
+<h2 id="_2">架构图（页面层 + 通用组件层）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[ui/home] --&gt; G[ui/common]
+    B[ui/modelmanager] --&gt; G
+    C[ui/llmchat] --&gt; G
+    D[ui/llmsingleturn] --&gt; G
+    E[ui/benchmark] --&gt; G
+    F[ui/notifications] --&gt; G
+    G --&gt; H[ui/theme]</code></pre>
+<hr />
+<h2 id="_3">关键代码细节（函数级）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="1-homescreen">1) 首页 <code>HomeScreen(...)</code><a class="headerlink" href="#1-homescreen" title="Permanent link">&para;</a></h2>
+<p>它不是只画卡片，实际还做了很多逻辑：</p>
+<ul>
+<li>读 <code>modelManagerViewModel.uiState</code>。</li>
+<li>当 <code>loadingModelAllowlist</code> 为 true 时，显示延迟 loading（避免闪烁）。</li>
+<li>分类页签来自 <code>uiState.tasksByCategory</code>。</li>
+<li>点击任务卡触发 <code>navigateToTaskScreen(task)</code>。</li>
+<li>管理 ToS 弹窗、SettingsDialog、通知权限请求。</li>
+</ul>
+<hr />
+<h2 id="2-chatviewmodel">2) 聊天状态底座 <code>ChatViewModel</code><a class="headerlink" href="#2-chatviewmodel" title="Permanent link">&para;</a></h2>
+<p><code>ChatViewModel.kt</code> 管理聊天消息总状态：</p>
+<ul>
+<li><code>messagesByModel</code>：每个模型一条独立聊天记录</li>
+<li><code>addMessage(...)</code></li>
+<li><code>updateLastTextMessageContentIncrementally(...)</code></li>
+<li><code>updateLastThinkingMessageContentIncrementally(...)</code></li>
+<li><code>saveSession(...)</code> 把聊天落到 <code>chat_sessions</code></li>
+<li><code>deleteSession(...)</code> / <code>clearAllSessions(...)</code></li>
+</ul>
+<p>这就是“切换模型后聊天互不干扰”的根因。</p>
+<hr />
+<h2 id="3-llmchatviewmodel">3) 多轮聊天 <code>LlmChatViewModel</code><a class="headerlink" href="#3-llmchatviewmodel" title="Permanent link">&para;</a></h2>
+<p><code>generateResponse(...)</code> 的核心动作：</p>
+<ol>
+<li>等待 <code>model.instance</code> 完成初始化。</li>
+<li>先插入 loading 消息。</li>
+<li>调 <code>model.runtimeHelper.runInference(...)</code>。</li>
+<li>流式 token 回来时更新最后一条消息。</li>
+<li>done 后写 latency，收尾状态。</li>
+</ol>
+<p><code>applySystemPromptChange(...)</code> 还会：</p>
+<ul>
+<li>保存新提示词</li>
+<li>触发 reset session</li>
+<li>插入“System prompt updated”提示消息</li>
+</ul>
+<hr />
+<h2 id="4-prompt-lab-llmsingleturnviewmodel">4) Prompt Lab <code>LlmSingleTurnViewModel</code><a class="headerlink" href="#4-prompt-lab-llmsingleturnviewmodel" title="Permanent link">&para;</a></h2>
+<p>与多轮聊天不同，它每次都：</p>
+<ul>
+<li>先 <code>resetConversation(...)</code></li>
+<li>再做一次 single-turn 推理</li>
+<li>把结果按模板类型存到 <code>responsesByModel[model][template]</code></li>
+</ul>
+<p>适合做“单次指令测试”。</p>
+<hr />
+<h2 id="5-benchmark">5) Benchmark 页面<a class="headerlink" href="#5-benchmark" title="Permanent link">&para;</a></h2>
+<p><code>BenchmarkViewModel.runBenchmark(...)</code>：</p>
+<ul>
+<li>LiteRT 路径：调用 benchmark API，循环 runCount 次</li>
+<li>AICore 路径：直接 runInference 并统计 token 输出速度</li>
+<li>结果写入 <code>BenchmarkResult</code> 并持久化到 DataStore</li>
+</ul>
+<hr />
+<h2 id="_4">流程图（聊天页面一次发消息）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant U as 用户
+    participant S as LlmChatScreen
+    participant V as LlmChatViewModel
+    participant R as runtimeHelper
+    participant C as ChatViewModel state
+
+    U-&gt;&gt;S: 点击发送
+    S-&gt;&gt;V: generateResponse(model,input)
+    V-&gt;&gt;C: add loading message
+    V-&gt;&gt;R: runInference(...)
+    R--&gt;&gt;V: partial token
+    V-&gt;&gt;C: updateLastTextMessageContentIncrementally
+    R--&gt;&gt;V: done
+    V-&gt;&gt;C: 结束状态 + latency</code></pre>
+<hr />
+<h2 id="_5">一个真实小例子（为什么切模型不会串聊天）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>原因在 <code>ChatViewModel</code> 的数据结构：</p>
+<ul>
+<li><code>messagesByModel: Map&lt;String, MutableList&lt;ChatMessage&gt;&gt;</code></li>
+</ul>
+<p>key 是 <code>model.name</code>。<br />
+所以：</p>
+<ul>
+<li>Gemma 的消息存一份</li>
+<li>另一个模型再存一份</li>
+</ul>
+<p>切换模型只是换 key，不会拿错列表。</p>
+<hr />
+<h2 id="ui">深入代码：UI 状态“谁改、何时改”清单<a class="headerlink" href="#ui" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>修改函数</th>
+<th>触发时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入发送中</td>
+<td><code>LlmChatViewModel.generateResponse</code></td>
+<td>用户点击发送后立刻</td>
+</tr>
+<tr>
+<td>最后一条文本消息</td>
+<td><code>updateLastTextMessageContentIncrementally</code></td>
+<td>每次收到 token</td>
+</tr>
+<tr>
+<td>thinking 消息</td>
+<td><code>updateLastThinkingMessageContentIncrementally</code></td>
+<td>模型返回 reasoning chunk</td>
+</tr>
+<tr>
+<td>会话持久化</td>
+<td><code>saveSession</code></td>
+<td>用户触发保存或页面生命周期触发</td>
+</tr>
+<tr>
+<td>当前选中 session</td>
+<td><code>setCurrentSessionName</code></td>
+<td>用户切换历史会话</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">深入代码：聊天消息生命周期（从创建到落盘）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[用户发送文本] --&gt; B[add user message]
+    B --&gt; C[add loading assistant message]
+    C --&gt; D[runInference]
+    D --&gt; E[partial token]
+    E --&gt; F[增量更新最后一条 assistant 消息]
+    F --&gt; G{done?}
+    G --&gt;|否| E
+    G --&gt;|是| H[更新 latency/状态]
+    H --&gt; I[saveSession -&gt; chat_sessions]</code></pre>
+<hr />
+<h2 id="ui_1">深入代码：UI 不卡顿的两个关键点<a class="headerlink" href="#ui_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li>首页 loading 采用“延迟显示”，短加载不闪屏。  </li>
+<li>聊天区用“增量更新最后一条消息”，不是每个 token 新建一条消息。  </li>
+</ol>
+<hr />
+<h2 id="ui_2">排障提示（UI 层）<a class="headerlink" href="#ui_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>消息不刷新</strong>：优先看是否走到了 <code>updateLastTextMessageContentIncrementally</code>。  </li>
+<li><strong>切会话后内容错乱</strong>：检查 <code>currentSessionName</code> 与 <code>messagesByModel</code> 的 key 是否一致。  </li>
+<li><strong>首页一直 loading</strong>：检查 <code>loadingModelAllowlist</code> 与延迟 loading 状态是否正确归零。  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

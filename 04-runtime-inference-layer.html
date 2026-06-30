@@ -1,0 +1,1888 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="03-data-and-state-layer.html">
+      
+      
+        <link rel="next" href="05-task-extension-layer.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 核心架构 04：推理运行时层 - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-04" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 核心架构 04：推理运行时层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-startup-and-app-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-data-and-state-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="04-runtime-inference-layer.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（统一接口 + 两个后端）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推理框架体系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="推理框架体系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两大推理框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键导入
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-llmmodelhelperframework-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 统一接口：LlmModelHelper（Framework Contract）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-modelruntimehelperextension-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 动态分派：Model.runtimeHelper（Extension Property）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-litert-lm-llmchatmodelhelper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) LiteRT-LM 实现详解（LlmChatModelHelper）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3) LiteRT-LM 实现详解（LlmChatModelHelper）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runinference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推理执行（runInference）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mlkit-aicore-aicoremodelhelper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) MLKit AICore 实现详解（AICoreModelHelper）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4) MLKit AICore 实现详解（AICoreModelHelper）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runinference_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推理执行（runInference）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-viewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 典型用法（ViewModel 层）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5) 典型用法（ViewModel 层）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户点"发送"时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户点"停止"时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型清理时
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-viewmodel_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 调用侧（ViewModel）如何用它
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（一次消息生成）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（用户点“停止生成”）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：统一接口参数为什么这么多
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#litert-aicore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：LiteRT 与 AICore 的关键差异表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：回调时序（上层为何能流式渲染）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充流程图：初始化失败/成功分支
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（运行时层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：模型加载（initialize）参数是怎么被消费的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#litert-initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：LiteRT initialize 真正执行的步骤
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aicore-initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：AICore initialize 真正执行的步骤
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-task-extension-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-ui-component-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-system-and-background.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（统一接口 + 两个后端）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推理框架体系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="推理框架体系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两大推理框架
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键导入
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-llmmodelhelperframework-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) 统一接口：LlmModelHelper（Framework Contract）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-modelruntimehelperextension-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 动态分派：Model.runtimeHelper（Extension Property）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-litert-lm-llmchatmodelhelper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) LiteRT-LM 实现详解（LlmChatModelHelper）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3) LiteRT-LM 实现详解（LlmChatModelHelper）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runinference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推理执行（runInference）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mlkit-aicore-aicoremodelhelper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) MLKit AICore 实现详解（AICoreModelHelper）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4) MLKit AICore 实现详解（AICoreModelHelper）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初始化流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runinference_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推理执行（runInference）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-viewmodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 典型用法（ViewModel 层）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5) 典型用法（ViewModel 层）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户点"发送"时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户点"停止"时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型清理时
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-viewmodel_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) 调用侧（ViewModel）如何用它
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（一次消息生成）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（用户点“停止生成”）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：统一接口参数为什么这么多
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#litert-aicore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：LiteRT 与 AICore 的关键差异表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：回调时序（上层为何能流式渲染）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        补充流程图：初始化失败/成功分支
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（运行时层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：模型加载（initialize）参数是怎么被消费的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#litert-initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：LiteRT initialize 真正执行的步骤
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aicore-initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：AICore initialize 真正执行的步骤
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-04">Android 核心架构 04：推理运行时层<a class="headerlink" href="#android-04" title="Permanent link">&para;</a></h1>
+<h2 id="_1">这章讲什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>把“模型运行时”想成两台机器：</p>
+<ul>
+<li>机器 A：<code>LlmChatModelHelper</code>（LiteRT-LM）</li>
+<li>机器 B：<code>AICoreModelHelper</code>（ML Kit AICore）</li>
+</ul>
+<p>外面的人（页面/ViewModel）不用关心机器内部差别，只要按一个统一按钮：</p>
+<ul>
+<li>初始化</li>
+<li>说一句话</li>
+<li>停止</li>
+<li>清理</li>
+</ul>
+<hr />
+<h2 id="_2">架构图（统一接口 + 两个后端）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[LlmChatViewModel / LlmSingleTurnViewModel] --&gt; B[Model.runtimeHelper]
+    B --&gt;|runtimeType != AICORE| C[LlmChatModelHelper]
+    B --&gt;|runtimeType == AICORE| D[AICoreModelHelper]
+
+    C --&gt; C1[Engine + Conversation]
+    D --&gt; D1[GenerativeModel + chatHistory]</code></pre>
+<hr />
+<h2 id="_3">推理框架体系<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">两大推理框架<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>库名</th>
+<th>版本</th>
+<th>主类</th>
+<th>实现类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LiteRT-LM</strong></td>
+<td><code>com.google.ai.edge.litertlm</code></td>
+<td>0.11.0</td>
+<td><code>Engine</code>、<code>Conversation</code></td>
+<td><code>LlmChatModelHelper</code></td>
+</tr>
+<tr>
+<td><strong>MLKit AICore</strong></td>
+<td><code>com.google.mlkit:genai-prompt</code></td>
+<td>1.0.0-beta2</td>
+<td><code>GenerativeModel</code></td>
+<td><code>AICoreModelHelper</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">关键导入<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// LiteRT-LM</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.Engine</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.Conversation</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.EngineConfig</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.ConversationConfig</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.Backend</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.SamplerConfig</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.ai.edge.litertlm.ToolProvider</span>
+
+<span class="c1">// MLKit AICore</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.mlkit.genai.prompt.GenerativeModel</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.mlkit.genai.prompt.generationConfig</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.mlkit.genai.prompt.modelConfig</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.mlkit.genai.prompt.Generation</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">com.google.mlkit.genai.common.FeatureStatus</span>
+</code></pre></div>
+<hr />
+<h2 id="_6">关键代码细节（函数级）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="1-llmmodelhelperframework-contract">1) 统一接口：<code>LlmModelHelper</code>（Framework Contract）<a class="headerlink" href="#1-llmmodelhelperframework-contract" title="Permanent link">&para;</a></h2>
+<p>完整接口定义（位于 <code>LlmModelHelper.kt</code>）：</p>
+<div class="highlight"><pre><span></span><code><span class="k">typealias</span><span class="w"> </span><span class="n">ResultListener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">  </span><span class="p">(</span><span class="n">partialResult</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span><span class="w"> </span><span class="n">partialThinkingResult</span><span class="p">:</span><span class="w"> </span><span class="kt">String?</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span>
+
+<span class="k">typealias</span><span class="w"> </span><span class="n">CleanUpListener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span>
+
+<span class="kd">interface</span><span class="w"> </span><span class="nc">LlmModelHelper</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * 初始化推理运行时，支持图像/音频输入、工具调用。</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="kd">fun</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span>
+<span class="w">    </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">Context</span><span class="p">,</span>
+<span class="w">    </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">    </span><span class="n">taskId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="n">supportImage</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">    </span><span class="n">supportAudio</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">    </span><span class="n">onDone</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">,</span><span class="w">  </span><span class="c1">// 错误消息或成功标记</span>
+<span class="w">    </span><span class="n">systemInstruction</span><span class="p">:</span><span class="w"> </span><span class="n">Contents? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ToolProvider</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">enableConversationConstrainedDecoding</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">coroutineScope</span><span class="p">:</span><span class="w"> </span><span class="n">CoroutineScope? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * 重置对话历史，保留系统提示词和工具。</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="kd">fun</span><span class="w"> </span><span class="nf">resetConversation</span><span class="p">(</span>
+<span class="w">    </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">    </span><span class="n">supportImage</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">supportAudio</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">systemInstruction</span><span class="p">:</span><span class="w"> </span><span class="n">Contents? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ToolProvider</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">enableConversationConstrainedDecoding</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">initialMessages</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(),</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * 执行推理并流式返回结果。</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="kd">fun</span><span class="w"> </span><span class="nf">runInference</span><span class="p">(</span>
+<span class="w">    </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">    </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">    </span><span class="n">images</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Bitmap</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">listOf</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">audio</span><span class="p">:</span><span class="w"> </span><span class="n">ByteArray? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="n">resultListener</span><span class="p">:</span><span class="w"> </span><span class="n">ResultListener</span><span class="p">,</span>
+<span class="w">    </span><span class="n">cleanUpListener</span><span class="p">:</span><span class="w"> </span><span class="n">CleanUpListener</span><span class="p">,</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * 立即停止正在进行的推理。</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="kd">fun</span><span class="w"> </span><span class="nf">stopResponse</span><span class="p">(</span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">)</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * 清理模型实例占用的内存和资源。</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="kd">fun</span><span class="w"> </span><span class="nf">cleanUp</span><span class="p">(</span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span><span class="w"> </span><span class="n">onDone</span><span class="p">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>这 5 个方法就是"运行时契约"。任何新后端都必须实现它。</p>
+<hr />
+<h2 id="2-modelruntimehelperextension-property">2) 动态分派：<code>Model.runtimeHelper</code>（Extension Property）<a class="headerlink" href="#2-modelruntimehelperextension-property" title="Permanent link">&para;</a></h2>
+<p>位于 <code>ModelHelperExt.kt</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nv">testingModelHelper</span><span class="p">:</span><span class="w"> </span><span class="n">LlmModelHelper? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="w">  </span><span class="c1">// 用于测试注入</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="nv">Model</span><span class="p">.</span><span class="na">runtimeHelper</span><span class="p">:</span><span class="w"> </span><span class="n">LlmModelHelper</span>
+<span class="w">  </span><span class="k">get</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">testingModelHelper</span><span class="o">?.</span><span class="na">let</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">it</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="c1">// 测试优先级最高</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">runtimeType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">RuntimeType</span><span class="p">.</span><span class="na">AICORE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">AICoreModelHelper</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">LlmChatModelHelper</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>分派规则</strong>：
+- 若 <code>model.runtimeType == RuntimeType.AICORE</code> → 使用 <code>AICoreModelHelper</code>
+- 否则 → 使用 <code>LlmChatModelHelper</code></p>
+<p><strong>调用侧代码</strong>无需 if-else，直接写：</p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="p">.</span><span class="na">runtimeHelper</span><span class="p">.</span><span class="na">initialize</span><span class="p">(...)</span><span class="w">  </span><span class="c1">// 自动分派到正确的后端</span>
+</code></pre></div>
+<hr />
+<h2 id="3-litert-lm-llmchatmodelhelper">3) LiteRT-LM 实现详解（<code>LlmChatModelHelper</code>）<a class="headerlink" href="#3-litert-lm-llmchatmodelhelper" title="Permanent link">&para;</a></h2>
+<h3 id="_7">初始化流程<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span>
+<span class="w">  </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">Context</span><span class="p">,</span>
+<span class="w">  </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">  </span><span class="n">taskId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">  </span><span class="n">supportImage</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">  </span><span class="n">supportAudio</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">  </span><span class="n">onDone</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">,</span>
+<span class="w">  </span><span class="n">systemInstruction</span><span class="p">:</span><span class="w"> </span><span class="n">Contents?,</span>
+<span class="w">  </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ToolProvider</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">enableConversationConstrainedDecoding</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">  </span><span class="n">coroutineScope</span><span class="p">:</span><span class="w"> </span><span class="n">CoroutineScope?,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// 步骤 1：读取模型参数（从 model.configValues 取）</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">maxTokens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getIntConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">MAX_TOKENS</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_MAX_TOKEN</span><span class="p">)</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">topK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getIntConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">TOPK</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_TOPK</span><span class="p">)</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">topP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getFloatConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">TOPP</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_TOPP</span><span class="p">)</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getFloatConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">TEMPERATURE</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_TEMPERATURE</span><span class="p">)</span>
+
+<span class="w">  </span><span class="c1">// 步骤 2：选择后端（根据加速器类型）</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">accelerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getStringConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">ACCELERATOR</span><span class="p">,</span><span class="w"> </span><span class="n">Accelerator</span><span class="p">.</span><span class="na">GPU</span><span class="p">.</span><span class="na">label</span><span class="p">)</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">preferredBackend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="n">accelerator</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Accelerator</span><span class="p">.</span><span class="na">CPU</span><span class="p">.</span><span class="na">label</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Backend</span><span class="p">.</span><span class="na">CPU</span><span class="p">()</span>
+<span class="w">    </span><span class="n">Accelerator</span><span class="p">.</span><span class="na">GPU</span><span class="p">.</span><span class="na">label</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Backend</span><span class="p">.</span><span class="na">GPU</span><span class="p">()</span>
+<span class="w">    </span><span class="n">Accelerator</span><span class="p">.</span><span class="na">NPU</span><span class="p">.</span><span class="na">label</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Backend</span><span class="p">.</span><span class="na">NPU</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">applicationInfo</span><span class="p">.</span><span class="na">nativeLibraryDir</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Accelerator</span><span class="p">.</span><span class="na">TPU</span><span class="p">.</span><span class="na">label</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Backend</span><span class="p">.</span><span class="na">NPU</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">applicationInfo</span><span class="p">.</span><span class="na">nativeLibraryDir</span><span class="p">)</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Backend</span><span class="p">.</span><span class="na">GPU</span><span class="p">()</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// 步骤 3：配置采样器</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">samplerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SamplerConfig</span><span class="p">(</span>
+<span class="w">    </span><span class="n">topK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topK</span><span class="p">,</span>
+<span class="w">    </span><span class="n">topP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topP</span><span class="p">,</span>
+<span class="w">    </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temperature</span><span class="p">,</span>
+<span class="w">    </span><span class="n">enableConversationConstrainedDecoding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enableConversationConstrainedDecoding</span><span class="p">,</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c1">// 步骤 4：构建 EngineConfig（包含模型路径、后端、视觉/音频支持）</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">engineConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EngineConfig</span><span class="p">(</span>
+<span class="w">    </span><span class="n">modelPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getPath</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">modelName</span><span class="p">),</span>
+<span class="w">    </span><span class="n">backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">preferredBackend</span><span class="p">,</span>
+<span class="w">    </span><span class="n">visionBackend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">shouldEnableImage</span><span class="p">)</span><span class="w"> </span><span class="n">visionBackend</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">    </span><span class="n">audioBackend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">shouldEnableAudio</span><span class="p">)</span><span class="w"> </span><span class="n">audioBackend</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c1">// 步骤 5：初始化 Engine（核心推理引擎）</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">engine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Engine</span><span class="p">(</span><span class="n">engineConfig</span><span class="p">)</span>
+<span class="w">  </span><span class="n">engine</span><span class="p">.</span><span class="na">initialize</span><span class="p">()</span><span class="w">  </span><span class="c1">// 加载模型权重到内存</span>
+
+<span class="w">  </span><span class="c1">// 步骤 6：构建会话配置</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">conversationConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConversationConfig</span><span class="p">(</span>
+<span class="w">    </span><span class="n">systemInstruction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">systemInstruction</span><span class="p">,</span>
+<span class="w">    </span><span class="n">tools</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tools</span><span class="p">,</span>
+<span class="w">    </span><span class="n">samplerConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">samplerConfig</span><span class="p">,</span>
+<span class="w">  </span><span class="p">)</span>
+
+<span class="w">  </span><span class="c1">// 步骤 7：创建会话实例并保存</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">conversation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Conversation</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span><span class="w"> </span><span class="n">conversationConfig</span><span class="p">)</span>
+<span class="w">  </span><span class="n">model</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LlmModelInstance</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span><span class="w"> </span><span class="n">conversation</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">// 成功</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="runinference">推理执行（<code>runInference</code>）<a class="headerlink" href="#runinference" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">runInference</span><span class="p">(</span>
+<span class="w">  </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">  </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">  </span><span class="n">images</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Bitmap</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">audio</span><span class="p">:</span><span class="w"> </span><span class="n">ByteArray?,</span>
+<span class="w">  </span><span class="n">resultListener</span><span class="p">:</span><span class="w"> </span><span class="n">ResultListener</span><span class="p">,</span>
+<span class="w">  </span><span class="n">cleanUpListener</span><span class="p">:</span><span class="w"> </span><span class="n">CleanUpListener</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="k">as?</span><span class="w"> </span><span class="n">LlmModelInstance</span><span class="p">)</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="k">return</span>
+
+<span class="w">  </span><span class="c1">// 转换输入为 LiteRT 格式</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Contents</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addText</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">apply</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">images</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">addImage</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="n">audio</span><span class="o">?.</span><span class="na">let</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">addAudio</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+
+<span class="w">  </span><span class="c1">// 发起异步推理</span>
+<span class="w">  </span><span class="n">instance</span><span class="p">.</span><span class="na">conversation</span><span class="p">.</span><span class="na">sendMessageAsync</span><span class="p">(</span>
+<span class="w">    </span><span class="n">contents</span><span class="p">,</span>
+<span class="w">    </span><span class="k">object</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">MessageCallback</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onPartialResult</span><span class="p">(</span><span class="n">partialResult</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">resultListener</span><span class="p">(</span><span class="n">partialResult</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onComplete</span><span class="p">(</span><span class="n">result</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">resultListener</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<span class="w">        </span><span class="n">cleanUpListener</span><span class="p">()</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onError</span><span class="p">(</span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">resultListener</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<span class="w">        </span><span class="n">cleanUpListener</span><span class="p">()</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="4-mlkit-aicore-aicoremodelhelper">4) MLKit AICore 实现详解（<code>AICoreModelHelper</code>）<a class="headerlink" href="#4-mlkit-aicore-aicoremodelhelper" title="Permanent link">&para;</a></h2>
+<h3 id="_8">初始化流程<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span>
+<span class="w">  </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">Context</span><span class="p">,</span>
+<span class="w">  </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">  </span><span class="n">taskId</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">  </span><span class="n">supportImage</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">  </span><span class="n">supportAudio</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">  </span><span class="n">onDone</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">String</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">,</span>
+<span class="w">  </span><span class="n">systemInstruction</span><span class="p">:</span><span class="w"> </span><span class="n">Contents?,</span>
+<span class="w">  </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ToolProvider</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">enableConversationConstrainedDecoding</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+<span class="w">  </span><span class="n">coroutineScope</span><span class="p">:</span><span class="w"> </span><span class="n">CoroutineScope?,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// AICore 需要 coroutine 上下文</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">coroutineScope</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;Initialization failed: CoroutineScope is null&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// 步骤 1：构建 GenerativeModel 配置</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">modelConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modelConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">modelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">modelId</span><span class="w">  </span><span class="c1">// 例如 &quot;gemini-2.0-flash&quot;</span>
+<span class="w">    </span><span class="n">modelPreference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelPreference</span><span class="p">.</span><span class="na">LATEST</span>
+<span class="w">    </span><span class="n">releaseStage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelReleaseStage</span><span class="p">.</span><span class="na">STABLE</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">generationConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generationConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">maxOutputTokens</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getIntConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">MAX_OUTPUT_TOKEN</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_MAX_OUTPUT_TOKEN</span><span class="p">)</span>
+<span class="w">    </span><span class="n">topK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getIntConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">TOPK</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_TOPK</span><span class="p">)</span>
+<span class="w">    </span><span class="n">topP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getFloatConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">TOPP</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_TOPP</span><span class="p">)</span>
+<span class="w">    </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="na">getFloatConfigValue</span><span class="p">(</span><span class="n">ConfigKeys</span><span class="p">.</span><span class="na">TEMPERATURE</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_TEMPERATURE</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">generativeModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerativeModel</span><span class="p">(</span><span class="n">modelConfig</span><span class="p">,</span><span class="w"> </span><span class="n">generationConfig</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">coroutineScope</span><span class="p">.</span><span class="na">launch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// 步骤 2：检查功能可用性</span>
+<span class="w">      </span><span class="kd">val</span><span class="w"> </span><span class="nv">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generativeModel</span><span class="p">.</span><span class="na">checkStatus</span><span class="p">()</span>
+<span class="w">      </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FeatureStatus</span><span class="p">.</span><span class="na">AVAILABLE</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// 步骤 3：Warmup（预热推理引擎）</span>
+<span class="w">          </span><span class="n">generativeModel</span><span class="p">.</span><span class="na">warmup</span><span class="p">()</span>
+
+<span class="w">          </span><span class="c1">// 步骤 4：创建会话实例</span>
+<span class="w">          </span><span class="n">model</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AICoreModelInstance</span><span class="p">(</span>
+<span class="w">            </span><span class="n">generativeModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generativeModel</span><span class="p">,</span>
+<span class="w">            </span><span class="n">chatHistory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mutableListOf</span><span class="p">()</span><span class="w">  </span><span class="c1">// 空白对话历史</span>
+<span class="w">          </span><span class="p">)</span>
+<span class="w">          </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">// 成功</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">FeatureStatus</span><span class="p">.</span><span class="na">DOWNLOADABLE</span><span class="p">,</span><span class="w"> </span><span class="n">FeatureStatus</span><span class="p">.</span><span class="na">DOWNLOADING</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// 步骤 2b：如果需要下载，监听下载进度</span>
+<span class="w">          </span><span class="n">generativeModel</span><span class="p">.</span><span class="na">download</span><span class="p">().</span><span class="na">collect</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">downloadStatus</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="n">downloadStatus</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="k">is</span><span class="w"> </span><span class="n">DownloadStatus</span><span class="p">.</span><span class="na">DownloadStarted</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+<span class="w">                </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;Downloading (</span><span class="si">${</span><span class="n">downloadStatus</span><span class="p">.</span><span class="na">bytesToDownload</span><span class="si">}</span><span class="s"> bytes)&quot;</span><span class="p">)</span>
+<span class="w">              </span><span class="k">is</span><span class="w"> </span><span class="n">DownloadStatus</span><span class="p">.</span><span class="na">DownloadProgress</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+<span class="w">                </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;Progress: </span><span class="si">${</span><span class="n">downloadStatus</span><span class="p">.</span><span class="na">byteDownloaded</span><span class="si">}</span><span class="s">/</span><span class="si">${</span><span class="n">downloadStatus</span><span class="p">.</span><span class="na">totalBytes</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">              </span><span class="k">is</span><span class="w"> </span><span class="n">DownloadStatus</span><span class="p">.</span><span class="na">DownloadCompleted</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">generativeModel</span><span class="p">.</span><span class="na">warmup</span><span class="p">()</span>
+<span class="w">                </span><span class="n">model</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AICoreModelInstance</span><span class="p">(</span><span class="n">generativeModel</span><span class="p">)</span>
+<span class="w">                </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">              </span><span class="k">is</span><span class="w"> </span><span class="n">DownloadStatus</span><span class="p">.</span><span class="na">DownloadFailed</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+<span class="w">                </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;Download failed: </span><span class="si">${</span><span class="n">downloadStatus</span><span class="p">.</span><span class="na">exception</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">FeatureStatus</span><span class="p">.</span><span class="na">NOT_AVAILABLE</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+<span class="w">          </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;Feature not available on this device&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">onDone</span><span class="p">(</span><span class="s">&quot;Initialization failed: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="runinference_1">推理执行（<code>runInference</code>）<a class="headerlink" href="#runinference_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">runInference</span><span class="p">(</span>
+<span class="w">  </span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span>
+<span class="w">  </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+<span class="w">  </span><span class="n">images</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Bitmap</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">  </span><span class="n">audio</span><span class="p">:</span><span class="w"> </span><span class="n">ByteArray?,</span>
+<span class="w">  </span><span class="n">resultListener</span><span class="p">:</span><span class="w"> </span><span class="n">ResultListener</span><span class="p">,</span>
+<span class="w">  </span><span class="n">cleanUpListener</span><span class="p">:</span><span class="w"> </span><span class="n">CleanUpListener</span><span class="p">,</span>
+<span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="k">as?</span><span class="w"> </span><span class="n">AICoreModelInstance</span><span class="p">)</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="k">return</span>
+
+<span class="w">  </span><span class="c1">// 步骤 1：把新消息加入会话历史</span>
+<span class="w">  </span><span class="n">instance</span><span class="p">.</span><span class="na">chatHistory</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">AICoreChatMessage</span><span class="p">(</span><span class="n">isUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">))</span>
+
+<span class="w">  </span><span class="c1">// 步骤 2：构建请求</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="nv">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generateContentRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">content</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">text</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+<span class="w">      </span><span class="n">images</span><span class="p">.</span><span class="na">forEach</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">image</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="n">audio</span><span class="o">?.</span><span class="na">let</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">audio</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// 步骤 3：流式调用推理，取消旧任务</span>
+<span class="w">  </span><span class="n">instance</span><span class="p">.</span><span class="na">inferenceJob</span><span class="o">?.</span><span class="na">cancel</span><span class="p">()</span>
+<span class="w">  </span><span class="n">instance</span><span class="p">.</span><span class="na">inferenceJob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">viewModelScope</span><span class="p">.</span><span class="na">launch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="nv">fullResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="n">generativeModel</span><span class="p">.</span><span class="na">generateContentStream</span><span class="p">(</span><span class="n">request</span><span class="p">).</span><span class="na">collect</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="n">fullResponse</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">text</span>
+<span class="w">        </span><span class="n">resultListener</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">text</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="c1">// 步骤 4：完成后更新会话历史</span>
+<span class="w">      </span><span class="n">instance</span><span class="p">.</span><span class="na">chatHistory</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">AICoreChatMessage</span><span class="p">(</span><span class="n">isUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fullResponse</span><span class="p">))</span>
+<span class="w">      </span><span class="n">resultListener</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<span class="w">      </span><span class="n">cleanUpListener</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">CancellationException</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// 用户中断</span>
+<span class="w">      </span><span class="n">cleanUpListener</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">Exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">resultListener</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span>
+<span class="w">      </span><span class="n">cleanUpListener</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="5-viewmodel">5) 典型用法（ViewModel 层）<a class="headerlink" href="#5-viewmodel" title="Permanent link">&para;</a></h2>
+<h3 id="_9">用户点"发送"时<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">fun</span><span class="w"> </span><span class="nf">generateResponse</span><span class="p">(</span><span class="n">userInput</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span><span class="w"> </span><span class="n">selectedModel</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// 阶段 1：检查模型是否已初始化</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">selectedModel</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span>
+<span class="w">      </span><span class="n">inProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="n">loadingMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Loading model...&quot;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// 阶段 2：执行推理</span>
+<span class="w">  </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span><span class="n">inProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
+
+<span class="w">  </span><span class="n">selectedModel</span><span class="p">.</span><span class="na">runtimeHelper</span><span class="p">.</span><span class="na">runInference</span><span class="p">(</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">selectedModel</span><span class="p">,</span>
+<span class="w">    </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userInput</span><span class="p">,</span>
+<span class="w">    </span><span class="n">images</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">currentImages</span><span class="p">,</span>
+<span class="w">    </span><span class="n">resultListener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">partial</span><span class="p">,</span><span class="w"> </span><span class="n">done</span><span class="p">,</span><span class="w"> </span><span class="n">thinking</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">done</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 实时更新消息（增量拼接）</span>
+<span class="w">        </span><span class="n">updateLastTextMessageIncrementally</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 推理完成</span>
+<span class="w">        </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span><span class="n">inProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">// 清理状态</span>
+<span class="w">        </span><span class="n">currentImages</span><span class="p">.</span><span class="na">clear</span><span class="p">()</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="n">cleanUpListener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* cleanup */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="_10">用户点"停止"时<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">fun</span><span class="w"> </span><span class="nf">stopGenerating</span><span class="p">(</span><span class="n">selectedModel</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">selectedModel</span><span class="p">.</span><span class="na">runtimeHelper</span><span class="p">.</span><span class="na">stopResponse</span><span class="p">(</span><span class="n">selectedModel</span><span class="p">)</span>
+<span class="w">  </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span><span class="n">inProgress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="_11">模型清理时<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">fun</span><span class="w"> </span><span class="nf">cleanupModel</span><span class="p">(</span><span class="n">selectedModel</span><span class="p">:</span><span class="w"> </span><span class="n">Model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">selectedModel</span><span class="p">.</span><span class="na">runtimeHelper</span><span class="p">.</span><span class="na">cleanUp</span><span class="p">(</span><span class="n">selectedModel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">selectedModel</span><span class="p">.</span><span class="na">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_uiState</span><span class="p">.</span><span class="na">value</span><span class="p">.</span><span class="na">copy</span><span class="p">(</span>
+<span class="w">      </span><span class="n">modelInitializationStatus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InitStatus</span><span class="p">.</span><span class="na">NOT_INITIALIZED</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="5-viewmodel_1">5) 调用侧（ViewModel）如何用它<a class="headerlink" href="#5-viewmodel_1" title="Permanent link">&para;</a></h2>
+<p><code>LlmChatViewModel.generateResponse(...)</code> 并不关心具体后端，它只做：</p>
+<ol>
+<li>等 <code>model.instance != null</code></li>
+<li>调 <code>model.runtimeHelper.runInference(...)</code></li>
+<li>把 partial token 追加到消息 UI</li>
+<li>完成后设 <code>inProgress = false</code></li>
+</ol>
+<p>这就是抽象成功的标志：<strong>调用者代码几乎不需要知道后端类型</strong>。</p>
+<hr />
+<h2 id="_12">流程图（一次消息生成）<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant UI as LlmChatViewModel
+    participant RH as model.runtimeHelper
+    participant BE as LlmChatModelHelper/AICoreModelHelper
+    participant MSG as Chat 消息列表
+
+    UI-&gt;&gt;RH: runInference(input, images, audio)
+    RH-&gt;&gt;BE: 分派到具体实现
+    BE--&gt;&gt;UI: partial token 回调
+    UI-&gt;&gt;MSG: updateLastTextMessageContentIncrementally
+    BE--&gt;&gt;UI: done 回调
+    UI-&gt;&gt;MSG: 完成状态 + latency</code></pre>
+<hr />
+<h2 id="_13">一个真实小例子（用户点“停止生成”）<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>当用户点停止：</p>
+<ol>
+<li><code>LlmChatViewModel.stopResponse(model)</code> 被调用。</li>
+<li>里面调用 <code>model.runtimeHelper.stopResponse(model)</code>。</li>
+<li>如果是 LiteRT：执行 <code>conversation.cancelProcess()</code>。</li>
+<li>如果是 AICore：执行 <code>instance.inferenceJob?.cancel()</code>。</li>
+</ol>
+<p>结果：两个后端都能“马上停”，但上层代码只写一行。</p>
+<hr />
+<h2 id="_14">深入代码：统一接口参数为什么这么多<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p><code>initialize(...)</code> 参数里有：</p>
+<ul>
+<li><code>taskId</code></li>
+<li><code>supportImage</code></li>
+<li><code>supportAudio</code></li>
+<li><code>systemInstruction</code></li>
+<li><code>tools</code></li>
+<li><code>enableConversationConstrainedDecoding</code></li>
+</ul>
+<p>原因：运行时层不仅要“生成文本”，还要支持：</p>
+<ol>
+<li>多模态（图/音）</li>
+<li>Function/Tool 调用</li>
+<li>不同任务约束（同一模型在不同 task 的行为不同）</li>
+</ol>
+<hr />
+<h2 id="litert-aicore">深入代码：LiteRT 与 AICore 的关键差异表<a class="headerlink" href="#litert-aicore" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LiteRT (<code>LlmChatModelHelper</code>)</th>
+<th>AICore (<code>AICoreModelHelper</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实例类型</td>
+<td><code>Engine + Conversation</code></td>
+<td><code>GenerativeModel + chatHistory + inferenceJob</code></td>
+</tr>
+<tr>
+<td>推理入口</td>
+<td><code>conversation.sendMessageAsync</code></td>
+<td><code>generateContentStream</code></td>
+</tr>
+<tr>
+<td>停止方式</td>
+<td><code>conversation.cancelProcess()</code></td>
+<td><code>inferenceJob.cancel()</code></td>
+</tr>
+<tr>
+<td>会话重置</td>
+<td>重建 conversation</td>
+<td>清空并重建 chatHistory</td>
+</tr>
+<tr>
+<td>下载机制</td>
+<td>外部 <code>DownloadWorker</code></td>
+<td>内部 <code>generativeModel.download().collect</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_15">深入代码：回调时序（上层为何能流式渲染）<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<p><code>runInference(...)</code> 中回调顺序大体是：</p>
+<ol>
+<li>多次 <code>resultListener(partial, done=false, thinking?)</code></li>
+<li>最后一次 <code>resultListener("", done=true, null)</code> 或等效 done 分支</li>
+</ol>
+<p><code>LlmChatViewModel.generateResponse(...)</code> 正是利用这个时序做：</p>
+<ul>
+<li>第一 token 到达 -&gt; 去掉 loading</li>
+<li>中间 token -&gt; 增量拼接消息</li>
+<li>done -&gt; 固化消息并收尾状态</li>
+</ul>
+<hr />
+<h2 id="_16">补充流程图：初始化失败/成功分支<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A["initialize(model)"] --&gt; B{runtimeType}
+    B --&gt;|LiteRT| C[创建 EngineConfig + Engine.initialize]
+    B --&gt;|AICore| D[checkStatus/download/warmup]
+    C --&gt; E{成功?}
+    D --&gt; E
+    E --&gt;|是| F[model.instance = ...]
+    E --&gt;|否| G["onDone(error)"]
+    F --&gt; H["onDone('')"]</code></pre>
+<hr />
+<h2 id="_17">排障提示（运行时层）<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>推理没输出但不报错</strong>：先看 <code>model.instance</code> 是否为空，再看回调是否触发 <code>done=true</code>。  </li>
+<li><strong>AICore 设备不可用</strong>：查看 <code>checkStatus()</code> 分支与 <code>logAICoreAccessDetails(...)</code> 日志。  </li>
+<li><strong>停止不生效</strong>：确认调用的是当前模型实例；模型切换时要避免取消旧实例的 job/conversation。  </li>
+</ol>
+<hr />
+<h2 id="initialize">深入代码：模型加载（initialize）参数是怎么被消费的<a class="headerlink" href="#initialize" title="Permanent link">&para;</a></h2>
+<p><code>ModelManagerViewModel.initializeModel(...)</code> 传下来的参数，最终在两个后端里消费点不同：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>LiteRT 消费点</th>
+<th>AICore 消费点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>systemInstruction</code></td>
+<td><code>ConversationConfig.systemInstruction</code></td>
+<td>拼接到首轮 prompt/chat history</td>
+</tr>
+<tr>
+<td><code>tools</code></td>
+<td><code>tool(agentTools)</code> 注入 function call 能力</td>
+<td>工具能力由上层编排后再进入请求</td>
+</tr>
+<tr>
+<td><code>supportImage/supportAudio</code></td>
+<td>EngineConfig 的 vision/audio backend</td>
+<td>请求内容是否包含 image/audio</td>
+</tr>
+<tr>
+<td><code>taskId</code></td>
+<td>影响任务级约束与 prompt</td>
+<td>影响构造请求时的策略分支</td>
+</tr>
+<tr>
+<td><code>enableConversationConstrainedDecoding</code></td>
+<td>LiteRT 约束解码开关</td>
+<td>AICore 不同实现路径下的解码控制</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="litert-initialize">深入代码：LiteRT initialize 真正执行的步骤<a class="headerlink" href="#litert-initialize" title="Permanent link">&para;</a></h2>
+<ol>
+<li>读取 <code>model.getPath(...)</code> 定位模型文件。  </li>
+<li>从 <code>model.configValues</code> 读取 <code>maxTokens/topK/topP/temperature/accelerator</code>。  </li>
+<li>构建 <code>EngineConfig</code>（文本、视觉、音频 backend 组合）。  </li>
+<li><code>Engine.initialize()</code>，失败会通过 onDone/error 路径冒泡。  </li>
+<li>构建 <code>ConversationConfig(systemInstruction, samplerConfig, tools)</code>。  </li>
+<li><code>model.instance = LlmModelInstance(engine, conversation, ...)</code>。  </li>
+</ol>
+<p>也就是说，“模型加载”不仅是读文件，还包含采样参数、工具能力、系统提示词一起装配。</p>
+<hr />
+<h2 id="aicore-initialize">深入代码：AICore initialize 真正执行的步骤<a class="headerlink" href="#aicore-initialize" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>getGenerativeModel(model)</code> 获取可用实例描述。  </li>
+<li><code>checkStatus()</code> 判断当前机型/账号/服务状态。  </li>
+<li>若状态允许下载，执行 <code>download().collect</code> 监听进度。  </li>
+<li><code>warmup()</code>，提前触发运行时准备。  </li>
+<li>创建 <code>AICoreModelInstance(generativeModel, chatHistory, inferenceJob)</code> 并回写 <code>model.instance</code>。  </li>
+</ol>
+<p>如果 2/3/4 任一步失败，最终都会走 <code>onDone(error)</code>，上层把状态写为 <code>ERROR</code>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

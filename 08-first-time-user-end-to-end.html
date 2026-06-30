@@ -1,0 +1,1260 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="07-system-and-background.html">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 首次使用全流程实操说明（从 0 到可持续对话） - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-0" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 首次使用全流程实操说明（从 0 到可持续对话）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-startup-and-app-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-data-and-state-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-runtime-inference-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-task-extension-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-ui-component-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-system-and-background.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 一图看完整流程（用户视角）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 第一次打开：会发生什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 第一次打开：会发生什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 代码里实际怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 选择任务：从首页进入能力页面
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 选择任务：从首页进入能力页面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 代码里实际怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 选择模型与下载模型（首次最关键步骤）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 代码里实际怎么做（入口）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-huggingface-gated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 HuggingFace gated 模型分支（真实用户经常遇到）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 下载执行细节（后台）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 使用模型（Try it 后到第一条回复）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 代码里实际怎么做（关键链路）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 内容输出：用户最终会看到哪些“结果形态”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 会话管理（可持续使用的核心）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 用户能做的事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 代码里实际怎么做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 常见实际问题（按操作点排查）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 给第一次上手用户的最短路径（30 秒版）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 一图看完整流程（用户视角）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 第一次打开：会发生什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 第一次打开：会发生什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 代码里实际怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 选择任务：从首页进入能力页面
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 选择任务：从首页进入能力页面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 代码里实际怎么做
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 选择模型与下载模型（首次最关键步骤）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 代码里实际怎么做（入口）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-huggingface-gated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 HuggingFace gated 模型分支（真实用户经常遇到）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 下载执行细节（后台）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 使用模型（Try it 后到第一条回复）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 你看到的操作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 代码里实际怎么做（关键链路）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 内容输出：用户最终会看到哪些“结果形态”
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 会话管理（可持续使用的核心）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 用户能做的事
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 代码里实际怎么做
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 常见实际问题（按操作点排查）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 给第一次上手用户的最短路径（30 秒版）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-0">Android 首次使用全流程实操说明（从 0 到可持续对话）<a class="headerlink" href="#android-0" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>这篇不是架构拆解，而是站在<strong>第一次用 App 的用户</strong>视角，完整走一遍：<br />
+<strong>首次打开 -&gt; 选任务 -&gt; 选模型 -&gt; 下载模型 -&gt; 进入对话 -&gt; 生成内容 -&gt; 管理会话</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="1">1. 一图看完整流程（用户视角）<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[首次打开 App] --&gt; B[同意 ToS]
+    B --&gt; C[加载模型清单 allowlist]
+    C --&gt; D[首页选择任务卡片]
+    D --&gt; E[任务页选择模型]
+    E --&gt; F{模型已下载?}
+    F --&gt;|否| G[点击 Download]
+    G --&gt; H[下载/续传/解压]
+    H --&gt; I[下载成功]
+    F --&gt;|是| I
+    I --&gt; J[进入聊天页 Try it]
+    J --&gt; K[自动初始化模型]
+    K --&gt; L[输入文本/图像/音频]
+    L --&gt; M[流式输出内容]
+    M --&gt; N[自动保存会话]
+    N --&gt; O[历史会话: 新建/加载/删除/清空]</code></pre>
+<hr />
+<h2 id="2">2. 第一次打开：会发生什么<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 你看到的操作<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<ol>
+<li>第一次进 App，会先弹 ToS。  </li>
+<li>你同意后，才会进入首页任务卡片列表。  </li>
+<li>首页可能短暂显示“Loading model list”。</li>
+</ol>
+<h3 id="22">2.2 代码里实际怎么做<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ToS 控制：<code>HomeScreen.kt</code>  </li>
+<li><code>showTosDialog = !tosViewModel.getIsTosAccepted()</code>  </li>
+<li><code>onTosAccepted -&gt; tosViewModel.acceptTos()</code></li>
+<li>模型清单加载态：<code>uiState.loadingModelAllowlist</code>（200ms 防闪烁延迟显示）</li>
+<li>失败重试：<code>loadingModelAllowlistError</code> 弹窗里直接 <code>Retry -&gt; loadModelAllowlist()</code></li>
+</ul>
+<hr />
+<h2 id="3">3. 选择任务：从首页进入能力页面<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 你看到的操作<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<ol>
+<li>首页看到多个任务卡片（聊天、图像、音频、Agent 等）。  </li>
+<li>点击任意卡片，进入该任务的模型列表。</li>
+</ol>
+<h3 id="32">3.2 代码里实际怎么做<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ul>
+<li>首页点击：<code>HomeScreen.kt</code> 的 <code>navigateToTaskScreen(task)</code>  </li>
+<li>任务与模型来源：<code>ModelManagerViewModel.loadModelAllowlist()</code>  </li>
+<li>allowlist JSON -&gt; <code>AllowedModel.toModel()</code> -&gt; 按 <code>taskTypes</code> 挂到各任务。</li>
+</ul>
+<hr />
+<h2 id="4">4. 选择模型与下载模型（首次最关键步骤）<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h2 id="41">4.1 你看到的操作<a class="headerlink" href="#41" title="Permanent link">&para;</a></h2>
+<ol>
+<li>进入任务页后，每个模型卡片有 <code>Download</code> 或 <code>Try it</code>。  </li>
+<li>未下载时点 <code>Download</code>，看到进度条和百分比。  </li>
+<li>可中途取消。  </li>
+<li>下载完成后按钮变为 <code>Try it</code>。</li>
+</ol>
+<h2 id="42">4.2 代码里实际怎么做（入口）<a class="headerlink" href="#42" title="Permanent link">&para;</a></h2>
+<ul>
+<li>按钮逻辑：<code>DownloadAndTryButton.kt</code>  </li>
+<li><code>needToDownloadFirst = NOT_DOWNLOADED/FAILED 且非本地 override 且非 AICORE</code></li>
+<li>下载中显示进度；可点关闭图标触发 <code>cancelDownloadModel()</code></li>
+<li>ViewModel 入口：<code>ModelManagerViewModel.downloadModel(task, model)</code></li>
+<li>AICore：走 <code>AICoreModelHelper.downloadModel(...)</code></li>
+<li>LiteRT：走 <code>DownloadRepository.downloadModel(...)</code></li>
+</ul>
+<h2 id="43-huggingface-gated">4.3 HuggingFace gated 模型分支（真实用户经常遇到）<a class="headerlink" href="#43-huggingface-gated" title="Permanent link">&para;</a></h2>
+<ul>
+<li>文件：<code>DownloadAndTryButton.kt</code></li>
+<li>先探测 URL 是否需要鉴权。  </li>
+<li>需要鉴权时检查 token（未存储/过期/有效）。  </li>
+<li>必要时发起登录换 token。  </li>
+<li>若 403，弹“用户协议确认”sheet，引导打开协议页后再继续下载。</li>
+</ul>
+<h2 id="44">4.4 下载执行细节（后台）<a class="headerlink" href="#44" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>DefaultDownloadRepository.downloadModel(...)</code></li>
+<li>组装 <code>WorkRequest</code> 输入参数（URL、commit、fileName、extraData、token）</li>
+<li><code>enqueueUniqueWork(model.name, REPLACE, request)</code></li>
+<li>监听 <code>WorkInfo</code> 状态回传 UI</li>
+<li><code>DownloadWorker.doWork()</code></li>
+<li>前台服务通知保活</li>
+<li><code>*.tmp</code> + HTTP <code>Range</code> 断点续传</li>
+<li>每 200ms 上报下载进度/速率/剩余时间</li>
+<li>zip 模型自动解压并切 <code>UNZIPPING</code></li>
+</ul>
+<hr />
+<h2 id="5-try-it">5. 使用模型（Try it 后到第一条回复）<a class="headerlink" href="#5-try-it" title="Permanent link">&para;</a></h2>
+<h2 id="51">5.1 你看到的操作<a class="headerlink" href="#51" title="Permanent link">&para;</a></h2>
+<ol>
+<li>点击 <code>Try it</code> 进入聊天页。  </li>
+<li>首次会显示模型初始化加载。  </li>
+<li>输入文本（或图像/音频）并发送。  </li>
+<li>回复按流式逐字出现，可中途点 Stop。</li>
+</ol>
+<h2 id="52">5.2 代码里实际怎么做（关键链路）<a class="headerlink" href="#52" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant U as User
+    participant CV as ChatView
+    participant MM as ModelManagerViewModel
+    participant VM as LlmChatViewModel
+    participant RH as model.runtimeHelper
+
+    U-&gt;&gt;CV: 点 Try it 进入聊天页
+    CV-&gt;&gt;MM: initializeModel(task, model)
+    MM--&gt;&gt;CV: 状态 INITIALIZING -&gt; INITIALIZED
+    U-&gt;&gt;CV: 发送消息
+    CV-&gt;&gt;VM: generateResponse(model, input...)
+    VM-&gt;&gt;RH: runInference(...)
+    RH--&gt;&gt;VM: partial token / done
+    VM--&gt;&gt;CV: 增量更新消息 + latency</code></pre>
+<p>核心文件：
+- 初始化触发：<code>ChatView.kt</code>（下载成功后 <code>LaunchedEffect</code> 调 <code>initializeModel</code>）
+- 初始化执行：<code>ModelManagerViewModel.initializeModel(...)</code>
+- 推理执行：<code>LlmChatViewModel.generateResponse(...)</code>
+- 停止生成：<code>LlmChatViewModel.stopResponse(...) -&gt; model.runtimeHelper.stopResponse(...)</code></p>
+<hr />
+<h2 id="6">6. 内容输出：用户最终会看到哪些“结果形态”<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>系统不是只支持纯文本，输出类型在 <code>ChatMessage.kt</code> 有明确定义：
+- <code>TEXT</code>：文本回复（默认 Markdown 渲染）
+- <code>THINKING</code>：思考过程块（若模型与任务开启）
+- <code>IMAGE</code> / <code>IMAGE_WITH_HISTORY</code>：图像结果
+- <code>AUDIO_CLIP</code>：音频片段
+- <code>INFO/WARNING/ERROR</code>：系统提示与错误信息
+- <code>COLLAPSABLE_PROGRESS_PANEL</code>：任务进度块</p>
+<p>展示层对应：
+- 文本渲染：<code>MessageBodyText.kt</code>
+  - <code>isMarkdown=true</code> -&gt; <code>BufferedFadingMarkdownText</code>
+  - <code>isMarkdown=false</code> -&gt; 普通 <code>Text + SelectionContainer</code>
+- agent 文本可复制；图片可查看/分享/复制/保存（<code>ChatView.kt</code> 图像查看器）</p>
+<hr />
+<h2 id="7">7. 会话管理（可持续使用的核心）<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h2 id="71">7.1 用户能做的事<a class="headerlink" href="#71" title="Permanent link">&para;</a></h2>
+<ol>
+<li>自动保存当前会话。  </li>
+<li>打开历史列表，加载旧会话。  </li>
+<li>新建会话。  </li>
+<li>删除单条会话。  </li>
+<li>清空所有会话。</li>
+</ol>
+<h2 id="72">7.2 代码里实际怎么做<a class="headerlink" href="#72" title="Permanent link">&para;</a></h2>
+<ul>
+<li>自动保存触发：<code>ChatView.kt</code></li>
+<li>当 <code>uiState.inProgress</code> 变为 false 且当前有消息 -&gt; <code>saveSession(...)</code></li>
+<li>存储结构：<code>ChatViewModel.saveSession(...)</code></li>
+<li>消息转 <code>ChatSessionProto</code>（包含 title、timestamp、taskId、originalModel、messages）</li>
+<li>图像/音频会写缓存文件并记录路径，避免会话丢媒体</li>
+<li>历史 UI：<code>ChatHistorySideSheet.kt</code></li>
+<li><code>+ New chat</code>、加载、删除、<code>Clear all</code></li>
+<li>加载旧会话：<code>ChatView.kt</code></li>
+<li>反序列化 proto 消息 -&gt; 清空当前消息 -&gt; 回填消息 -&gt; <code>resetSession(clearHistory=false)</code></li>
+</ul>
+<hr />
+<h2 id="8">8. 常见实际问题（按操作点排查）<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>首页一直空白或没任务</strong><br />
+看 <code>loadingModelAllowlistError</code> 是否出现；重试会重新走 <code>loadModelAllowlist()</code>。</p>
+</li>
+<li>
+<p><strong>点击 Download 没开始</strong><br />
+先看是否在 token 检查流程（按钮会显示 <code>checking access</code>）；再看是否触发了内存警告或 Gemma ToU 弹窗。</p>
+</li>
+<li>
+<p><strong>下载到一半失败</strong><br />
+Worker 会落 <code>FAILED</code>，再次点击 Download 会从 tmp 续传（若服务器支持 Range）。</p>
+</li>
+<li>
+<p><strong>点 Try it 后一直不能发消息</strong><br />
+看是否仍在 <code>INITIALIZING</code>；聊天页下载成功后会自动触发 <code>initializeModel</code>。</p>
+</li>
+<li>
+<p><strong>历史会话加载后上下文不一致</strong><br />
+加载历史会话后会调用 <code>resetSession(initialMessages=...)</code>，会话 ID 切换为历史 sessionId；新建会话会生成新 UUID。</p>
+</li>
+</ol>
+<hr />
+<h2 id="9-30">9. 给第一次上手用户的最短路径（30 秒版）<a class="headerlink" href="#9-30" title="Permanent link">&para;</a></h2>
+<ol>
+<li>同意 ToS。  </li>
+<li>首页点一个任务（建议 LLM Chat）。  </li>
+<li>选一个模型，点 <code>Download</code>，等到 <code>Try it</code>。  </li>
+<li>点 <code>Try it</code> 进聊天页，输入一句话发送。  </li>
+<li>回答出来后，点右上角历史按钮可看到会话已自动保存。  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

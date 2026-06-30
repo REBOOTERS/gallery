@@ -1,0 +1,1124 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation site generated from the repository docs directory">
+      
+      
+      
+      
+        <link rel="prev" href="04-runtime-inference-layer.html">
+      
+      
+        <link rel="next" href="06-ui-component-layer.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Android 核心架构 05：任务扩展层 - AI Edge Gallery Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#android-05" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-header__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Edge Gallery Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Android 核心架构 05：任务扩展层
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="AI Edge Gallery Docs" class="md-nav__button md-logo" aria-label="AI Edge Gallery Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Edge Gallery Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google AI Edge Gallery - Android 核心架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-startup-and-app-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 01：启动与应用层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-navigation-and-page-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 02：导航与页面流
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-data-and-state-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 03：数据与状态层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-runtime-inference-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 04：推理运行时层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="05-task-extension-layer.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 05：任务扩展层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（任务插件机制）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-customtask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) CustomTask 契约长什么样
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-intoset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 注册机制：@IntoSet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agentchattask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) AgentChatTask 的实细节
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mobileactionstask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) MobileActionsTask 的实细节
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tinygardentask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) TinyGardenTask 的实细节
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-examplecustomtask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) ExampleCustomTask 的教学价值
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（新任务如何被系统识别）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（用户新增 Skill 后对话行为变化）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customtask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：CustomTask 生命周期表（输入/输出/副作用）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agenttools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：AgentTools 调用链（点一次工具到底走哪）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mobile-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：权限与能力分支矩阵（Mobile Actions）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（扩展层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-ui-component-layer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 06：UI 组件层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-system-and-background.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 核心架构 07：系统能力与后台模块
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-first-time-user-end-to-end.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 首次使用全流程实操说明（从 0 到可持续对话）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这章讲什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        架构图（任务插件机制）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关键代码细节（函数级）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-customtask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) CustomTask 契约长什么样
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-intoset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) 注册机制：@IntoSet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-agentchattask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) AgentChatTask 的实细节
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mobileactionstask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) MobileActionsTask 的实细节
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tinygardentask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) TinyGardenTask 的实细节
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-examplecustomtask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) ExampleCustomTask 的教学价值
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程图（新任务如何被系统识别）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一个真实小例子（用户新增 Skill 后对话行为变化）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customtask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：CustomTask 生命周期表（输入/输出/副作用）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agenttools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：AgentTools 调用链（点一次工具到底走哪）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mobile-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        深入代码：权限与能力分支矩阵（Mobile Actions）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排障提示（扩展层）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="android-05">Android 核心架构 05：任务扩展层<a class="headerlink" href="#android-05" title="Permanent link">&para;</a></h1>
+<h2 id="_1">这章讲什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>任务扩展层像“乐高接口”：</p>
+<ul>
+<li>你做一个新任务（新积木）。</li>
+<li>按 <code>CustomTask</code> 这套标准插口做。</li>
+<li>App 就能自动识别并显示这个任务。</li>
+</ul>
+<hr />
+<h2 id="_2">架构图（任务插件机制）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[CustomTask 接口] --&gt; B[AgentChatTask]
+    A --&gt; C[MobileActionsTask]
+    A --&gt; D[TinyGardenTask]
+    A --&gt; E[ExampleCustomTask]
+    A --&gt; F[LlmChatTask/LlmSingleTurnTask]
+
+    B --&gt; G[@IntoSet 注册]
+    C --&gt; G
+    D --&gt; G
+    E --&gt; G
+    F --&gt; G
+
+    G --&gt; H[ModelManagerViewModel 注入 Set&lt;CustomTask&gt;]
+    H --&gt; I[导航到任务 MainScreen]</code></pre>
+<hr />
+<h2 id="_3">关键代码细节（函数级）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="1-customtask">1) <code>CustomTask</code> 契约长什么样<a class="headerlink" href="#1-customtask" title="Permanent link">&para;</a></h2>
+<p>接口要求每个任务必须实现：</p>
+<ul>
+<li><code>val task: Task</code></li>
+<li><code>initializeModelFn(...)</code></li>
+<li><code>cleanUpModelFn(...)</code></li>
+<li><code>@Composable fun MainScreen(data: Any)</code></li>
+</ul>
+<p>其中 <code>task</code> 决定首页卡片显示信息，<code>MainScreen</code> 决定进入任务页后看到什么 UI。</p>
+<hr />
+<h2 id="2-intoset">2) 注册机制：<code>@IntoSet</code><a class="headerlink" href="#2-intoset" title="Permanent link">&para;</a></h2>
+<p>例如 <code>AgentChatTaskModule</code>：</p>
+<ul>
+<li><code>@Provides</code></li>
+<li><code>@IntoSet</code></li>
+<li><code>fun provideTask(): CustomTask = AgentChatTask()</code></li>
+</ul>
+<p>这会把任务加入 <code>Set&lt;CustomTask&gt;</code>。<br />
+<code>ModelManagerViewModel</code> 直接注入这个集合，不需要硬编码任务列表。</p>
+<hr />
+<h2 id="3-agentchattask">3) AgentChatTask 的实细节<a class="headerlink" href="#3-agentchattask" title="Permanent link">&para;</a></h2>
+<p><code>initializeModelFn(...)</code> 里做了这些实动作：</p>
+<ol>
+<li>并行加载 skills（<code>skillManagerViewModel.loadSkills()</code>）和 MCP servers。</li>
+<li>根据 MCP 是否启用，选择系统提示词模板（skills-only 或 skills+tools）。</li>
+<li>用 <code>injectSkillsAndMcpTools(...)</code> 把 skills 描述和工具 schema 填进 prompt。</li>
+<li>调 <code>LlmChatModelHelper.initialize(...)</code>，并注入 <code>tool(agentTools)</code>。</li>
+</ol>
+<p><code>AgentTools.kt</code> 里还定义了真正工具：</p>
+<ul>
+<li><code>loadSkill</code></li>
+<li><code>runMcpTool</code></li>
+<li><code>runJs</code></li>
+<li><code>runIntent</code></li>
+</ul>
+<p>不是“说支持工具”，而是有明确函数。</p>
+<hr />
+<h2 id="4-mobileactionstask">4) MobileActionsTask 的实细节<a class="headerlink" href="#4-mobileactionstask" title="Permanent link">&para;</a></h2>
+<p><code>MobileActionsTask</code> 使用：</p>
+<ul>
+<li><code>MobileActionsTools(onFunctionCalled = { curActions.add(it) })</code></li>
+</ul>
+<p>也就是说：模型触发 function call 后，会变成 <code>Action</code> 对象进队列，UI 再执行。<br />
+系统提示词 <code>getSystemPrompt()</code> 还会注入当前日期和星期，帮助模型理解“今天”“明天”这类话。</p>
+<hr />
+<h2 id="5-tinygardentask">5) TinyGardenTask 的实细节<a class="headerlink" href="#5-tinygardentask" title="Permanent link">&para;</a></h2>
+<p><code>TinyGardenTask</code> 的 <code>SYSTEM_PROMPT</code> 明确写了：</p>
+<ul>
+<li>3x3 地块编号规则</li>
+<li>seed 类型</li>
+<li>“top row/middle row”映射</li>
+</ul>
+<p>工具调用后通过 <code>_updateChannel</code> 往 UI 发 <code>TinyGardenCommand</code>，是一个真实事件流，不是死文本。</p>
+<hr />
+<h2 id="6-examplecustomtask">6) ExampleCustomTask 的教学价值<a class="headerlink" href="#6-examplecustomtask" title="Permanent link">&para;</a></h2>
+<p>演示了 2 种模型来源：</p>
+<ol>
+<li>本地手动放文件（<code>localFileRelativeDirPathOverride</code>）</li>
+<li>网络下载模型文件（<code>url + downloadFileName</code>）</li>
+</ol>
+<p>并在 <code>initializeModelFn</code> 里读取文件内容、按配置截断文本、构造 <code>model.instance</code>。</p>
+<hr />
+<h2 id="_4">流程图（新任务如何被系统识别）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant M as Hilt Module
+    participant S as Set&lt;CustomTask&gt;
+    participant VM as ModelManagerViewModel
+    participant NAV as GalleryNavGraph
+    participant UI as Task MainScreen
+
+    M-&gt;&gt;S: @IntoSet 提供新任务实例
+    VM-&gt;&gt;S: 注入并读取所有任务
+    VM-&gt;&gt;VM: processTasks + 组装 uiState.tasks
+    NAV-&gt;&gt;VM: 根据 taskId 找到 CustomTask
+    NAV-&gt;&gt;UI: 调用 MainScreen(data)</code></pre>
+<hr />
+<h2 id="skill">一个真实小例子（用户新增 Skill 后对话行为变化）<a class="headerlink" href="#skill" title="Permanent link">&para;</a></h2>
+<p>在 Agent Chat 里：</p>
+<ol>
+<li>用户勾选了新 Skill。</li>
+<li><code>resetSessionWithCurrentSkillsAndMcps(...)</code> 会重新构建 system prompt。</li>
+<li>prompt 里出现新 skill 的 name/description。</li>
+<li>模型下一轮推理就能调用 <code>loadSkill</code> -&gt; <code>runJs/runIntent/runMcpTool</code>。</li>
+</ol>
+<p>所以“新增 skill 能立刻生效”背后有明确的重置会话逻辑，不是玄学。</p>
+<hr />
+<h2 id="customtask">深入代码：CustomTask 生命周期表（输入/输出/副作用）<a class="headerlink" href="#customtask" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>核心函数</th>
+<th>输入</th>
+<th>输出</th>
+<th>副作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发现</td>
+<td><code>provideTask()/provideCustomTasks()</code></td>
+<td>Hilt 注入上下文</td>
+<td><code>Set&lt;CustomTask&gt;</code></td>
+<td>任务被注册进全局集合</td>
+</tr>
+<tr>
+<td>可用性判断</td>
+<td><code>isAvailable(context)</code>（若任务实现）</td>
+<td>设备能力、权限、系统版本</td>
+<td><code>Boolean</code></td>
+<td>决定任务是否出现在首页</td>
+</tr>
+<tr>
+<td>配置加载</td>
+<td><code>setCustomTaskData(data)</code></td>
+<td>模型参数、开关</td>
+<td>内部状态更新</td>
+<td>影响运行时 prompt/工具</td>
+</tr>
+<tr>
+<td>运行时接入</td>
+<td><code>toTask()/toModel()</code></td>
+<td>CustomTask 描述</td>
+<td>标准 <code>Task/Model</code></td>
+<td>进入统一导航与推理链路</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="agenttools">深入代码：AgentTools 调用链（点一次工具到底走哪）<a class="headerlink" href="#agenttools" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant U as User
+    participant VM as LlmChatViewModel
+    participant MH as RuntimeHelper
+    participant TO as ToolOrchestrator
+    participant AP as AgentPlatform
+
+    U-&gt;&gt;VM: 发送消息
+    VM-&gt;&gt;MH: runInference(...)
+    MH--&gt;&gt;VM: 生成 tool call
+    VM-&gt;&gt;TO: execute(toolName, args)
+    TO-&gt;&gt;AP: 执行平台能力
+    AP--&gt;&gt;TO: tool result
+    TO--&gt;&gt;VM: 格式化结果
+    VM-&gt;&gt;MH: 带结果继续推理</code></pre>
+<hr />
+<h2 id="mobile-actions">深入代码：权限与能力分支矩阵（Mobile Actions）<a class="headerlink" href="#mobile-actions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>分支</th>
+<th>用户看到什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权限已授权 + 服务可用</td>
+<td>正常启用</td>
+<td>可直接执行动作</td>
+</tr>
+<tr>
+<td>权限未授权</td>
+<td>引导授权</td>
+<td>任务可见，但先走授权流程</td>
+</tr>
+<tr>
+<td>服务不可用/版本不支持</td>
+<td>不可用</td>
+<td>任务隐藏或显示不支持提示</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_5">排障提示（扩展层）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>自定义任务不显示</strong>：先看 <code>@IntoSet</code> 是否注入成功，再看 <code>isAvailable()</code>。  </li>
+<li><strong>点了任务进不去页面</strong>：检查 <code>toTask()/toModel()</code> 是否给出有效 <code>taskName/modelId</code>。  </li>
+<li><strong>工具调用卡住</strong>：看 ToolOrchestrator 是否收到 tool result；没结果就不会进入下一轮推理。  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>
